@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}
+    <title>1 Page</title>
+{% endblock %}
+
+{% block navbar %}
+    {% include 'navbar.html' %}
+{% endblock %}
+
+{% block app_content %}
+    <table class="table">
+
+        <tbody>
+        <h3>Hello, Bootstrap</h3>
+        {% for p in data %}
+            <tr>
+                <th>{{ p }}</th>
+            {{ p | replace }}
+            </tr>
+        {% endfor %}
+
+        {% if data|length < 50 %}
+            <h4>!QAZZAQ!</h4>
+        {% else %}
+            <h4>!@#QWEasd!@#</h4>
+        {% endif %}
+        </tbody>
+    </table>
+
+
+{% endblock %}
+
+
+{#{% extends 'base.html' %}#}
+{##}
+{#{% block content %}#}
+{#    {% for p in data %}#}
+{#        <p>{{ p }}</p>#}
+{#    {% endfor %}#}
+{#{% endblock %}#}
