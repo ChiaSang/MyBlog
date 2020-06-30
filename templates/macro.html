@@ -1,6 +1,6 @@
 <!-- 定义一个宏，复用的部分可以定义成宏，以便于复用 -->
 {% macro form(action, value='Login', method='post') %}
-    <form action={{ action }}, method={{ method }}>
+    <form action="{{ action }}", method="{{ method }}">
         <input type="text" placeholder="Username" name="user">
         <br>
         <input type="password" placeholder="Password" name="passwd">

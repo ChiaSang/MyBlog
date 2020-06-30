@@ -9,7 +9,7 @@
 
 {% block app_content %}
 
-    <div style="padding-top: 30px">
+    <div style="margin-top: 30px">
         <form action='register' , method='post'>
             <input type="text" , placeholder="Username" , name="user">
             <br>
@@ -17,8 +17,8 @@
             <br>
             <input type="submit" , value='Sign Up'>
         </form>
-        {% import 'macro.html' as login %}
-        {{ login.form('register', value='注册') }}
+        {% import 'macro.html' as signup %}
+        {{ signup.form('/register', value='注册') }}
     </div>
 
 {% endblock %}
