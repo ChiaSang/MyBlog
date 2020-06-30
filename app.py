@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 # base.html为基本html，主体框架，其他页面继承自这个页面
 # navbar.html 导航页
 
@@ -28,17 +29,17 @@ p_name = ['京东商城', '苏宁电器', '国美', '淘宝', '天猫', '亚马�
           'CSDN', '博客园', '开发者头条', '掘金', '智联招聘', '拉勾网', 'BOSS直聘', '前程无忧', '猎聘网', '100offer', '内推网']
 
 
-@app.route("/", methods=['GET', 'POST'], endpoint='root')  # 路由,请求方法为哪些
+@app.route("/index", methods=['GET', 'POST'], endpoint='root')  # 路由,请求方法为哪些
 def index():  # 视图函数
-    title = 'Flask Web App'
-    print('-------->', request.args.get('info'))  # 获取form提交的值。Post传递的参数 argus不能获取值
+    # title = 'Flask Web Dev'
+    print('----->', request.args.get('info'))  # 获取form提交的值。Post传递的参数 argus不能获取值
     # print('-------->', request.form.get('info'))  # 获取form提交的值。Post传递的参数 argus不能获取值,只能使用request.form
     if request.args.get('info') in p_name:
         item = {p_name.index(request.args.get('info')): request.args.get('info')}  # 获取搜索结果并保存为字典形式
         # return render_template('show.html', title=title, data=item)
         return 'Search results: {}'.format(item)
 
-    return render_template('index.html', title=title, data=p_name)
+    return render_template('index.html', data=p_name)
 
 
 @app.route('/user/<username>', endpoint='un')  # 一种标记
@@ -50,14 +51,23 @@ def show_user_profile(username):
 
 
 def replace_hello(value):
-    print("----->", value)
+    # print("----->", value)
     value = value.replace('城', '')
-    print("----->", value)
+    # print("----->", value)
     return value.strip()
 
 
 app.add_template_filter(replace_hello, 'replace')  # 自定义函数
 
 
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    print(request.form.get('user'))
+    user = request.form.get('user')
+    if user == 'admin':
+        return '<br>System Reservation</br>'
+    return render_template('macro1.html')
+
+
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0', debug='true')

@@ -1,0 +1,12 @@
+<!-- 定义一个宏，复用的部分可以定义成宏，以便于复用 -->
+{% macro form(action, value='Login', method='post') %}
+    <form action={{ action }}, method={{ method }}>
+        <input type="text" placeholder="Username" name="user">
+        <br>
+        <input type="password" placeholder="Password" name="passwd">
+        <br>
+        <input type="submit" value={{ value }}>
+    </form>
+{% endmacro %}
+
+<!-- 宏可以直接在模板中定义，也可以单独写一个文件定义 -->
