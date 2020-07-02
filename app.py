@@ -1,15 +1,21 @@
 # -*- coding:utf-8 -*-
 # base.html为基本html，主体框架，其他页面继承自这个页面
 # navbar.html 导航页
-
-from markupsafe import escape
-from flask import Flask, render_template, request, redirect, url_for
+from flask_migrate import Migrate, MigrateCommand
+from flask_script import Manager
+# from markupsafe import escape
+# from flask import Flask, render_template, request, redirect, url_for
 from Apps import create_app
+from Apps.user.model import User
+from extents import db
+
 app = create_app()
+manager = Manager(app=app)
+migrate = Migrate(app=app, db=db)
+manager.add_command('db', MigrateCommand)
 
 from flask_bootstrap import Bootstrap
-import settings
-
+# import settings
 
 # app = Flask(__name__)
 # bootstrap = Bootstrap(app)
@@ -27,7 +33,6 @@ p_name = ['京东商城', '苏宁电器', '国美', '淘宝', '天猫', '亚马�
           '易车网', '人人车', '优信二手车', '瓜子二手车', '爱卡汽车', '车辆违章查询', '汽车用品', '哔哩哔哩', 'M站', '腾讯动漫', '网易漫画', '半次元', '有妖气', '中关村在线',
           '太平洋电脑', 'Engadget中国', 'IT之家', 'ZEALER', '数字尾巴', 'Chiphell', '苏宁数码', '京东数码', '开源中国', 'Segmentfault', 'v2ex',
           'CSDN', '博客园', '开发者头条', '掘金', '智联招聘', '拉勾网', 'BOSS直聘', '前程无忧', '猎聘网', '100offer', '内推网']
-
 
 # @app.route("/index", methods=['GET', 'POST'], endpoint='root')  # 路由,请求方法为哪些
 # def index():  # 视图函数
@@ -70,4 +75,5 @@ p_name = ['京东商城', '苏宁电器', '国美', '淘宝', '天猫', '亚马�
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug='true')
+    # app.run()
+    manager.run()
