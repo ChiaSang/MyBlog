@@ -1,5 +1,7 @@
 # Define user view fun
-from flask import Blueprint, render_template, request, redirect
+import hashlib
+
+from flask import Blueprint, render_template, request, redirect, url_for
 
 from Apps.user.model import User
 
@@ -27,12 +29,36 @@ def register():
     elif passwd == repasswd:
         user = User()
         user.name = username
-        user.passwd = passwd
-        user.repass =repasswd
+        user.passwd = hashlib.md5(passwd.encode('utf-8')).hexdigest()
+        user.repass = hashlib.md5(repasswd.encode('utf-8')).hexdigest()
         user.phone = phone
         db.session.add(user)
         db.session.commit()
-        return 'ok'
+        return redirect(url_for('user.user_center'))
     else:
         return '密码不一致'
     # return render_template('user/register.html')
+
+
+@user_bp.route('/usercenter')
+def user_center():
+    users = User.query.all()
+    return render_template('user/center.html', users=users)
+
+
+@user_bp.route('/login', methods=['GET', 'POST'])
+def user_login():
+    if request.method == 'POST':
+        username = request.form.get('user')
+        passwd = request.form.get('passwd')
+        hash_passwd = hashlib.md5(passwd.encode('utf8')).hexdigest()
+        users = User.query.filter_by(name=username)
+        for user in users:
+            if user.name == username:
+                if user.passwd == hash_passwd:
+                    return 'Login Success'
+                else:
+                    return render_template('user/login.html', msg='info Errors')
+        else:
+            return 'User does not exist !'
+    return render_template('user/login.html')

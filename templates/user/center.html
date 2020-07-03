@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}
+    <title>Sign UP</title>  <!-- 继承父模板，但是重写了-->
+{% endblock %}
+
+{% block navbar %}
+    {% include 'navbar.html' %}
+{% endblock %}
+
+
+{% block app_content %}
+    <div class="container" style="margin-top: 5%">
+
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Username</th>
+                <th scope="col">Passwd</th>
+                <th scope="col">rePasswd</th>
+                <th scope="col">Phone</th>
+                <th scope="col">register time</th>
+                <th scope="col">Operate</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.passwd }}</td>
+                    <td>{{ user.repass }}</td>
+                    <td>{{ user.phone }}</td>
+                    <td>{{ user.rtime }}</td>
+                    <td>
+                        <button type="button" class="btn btn-dark btn-sm">Update</button>
+                        <button type="button" class="btn btn-dark btn-sm">Del</button>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+{% endblock %}
+
+

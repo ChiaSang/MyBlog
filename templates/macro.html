@@ -1,16 +1,43 @@
 <!-- 定义一个宏，复用的部分可以定义成宏，以便于复用 -->
+{#<!--#}
+{#{% macro form(action, value='Login', method='post') %}#}
+{#    <form action="{{ action }}" method="{{ method }}">#}
+{#        <input type="text" placeholder="Username" name="user">#}
+{#        <br>#}
+{#        <input type="password" placeholder="Password" name="passwd">#}
+{#        <br>#}
+{#        <input type="password" placeholder="Password" name="repasswd">#}
+{#        <br>#}
+{#        <input type="text" placeholder="Phone" name="phone">#}
+{#        <br>#}
+{#        <input type="submit" value={{ value }}>#}
+{#    </form>#}
+{#{% endmacro %} #}
+{#-->#}
+
+<!-- 宏可以直接在模板中定义，也可以单独写一个文件定义 -->
+
+
 {% macro form(action, value='Login', method='post') %}
     <form action="{{ action }}" method="{{ method }}">
-        <input type="text" placeholder="Username" name="user">
-        <br>
-        <input type="password" placeholder="Password" name="passwd">
-        <br>
-        <input type="password" placeholder="Password" name="repasswd">
-        <br>
-        <input type="text" placeholder="Phone" name="phone">
-        <br>
-        <input type="submit" value={{ value }}>
+        <div class="form-group">
+            <label for="exampleInputEmail1" class="col-sm-2 col-form-label">Username</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" name="user">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1" class="col-sm-2 col-form-label">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" name="passwd">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1" class="col-sm-2 col-form-label">rePassword</label>
+            <input type="repassword" class="form-control" id="exampleInputPassword1" name="repasswd">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1" class="col-sm-2 col-form-label">Phone</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" name="phone">
+        </div>
+        <button type="submit" class="btn btn-primary">{{ value }}</button>
     </form>
 {% endmacro %}
 
-<!-- 宏可以直接在模板中定义，也可以单独写一个文件定义 -->

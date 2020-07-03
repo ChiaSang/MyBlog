@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}
+    <title>Sign In</title>  <!-- 继承父模板，但是重写了-->
+{% endblock %}
+
+{% block navbar %}
+    {% include 'navbar.html' %}
+{% endblock %}
+
+{% block app_content %}
+    <div class="container" style="width: 50%">
+        <form action="{{ url_for('user.user_login') }}" method="POST">
+            <div class="form-group">
+                <label for="exampleInputEmail1" class="col-sm-2 col-form-label">Username</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" name="user">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1" class="col-sm-2 col-form-label">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" name="passwd">
+            </div>
+            <p style="color: red">{{ msg }}</p>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    </div>
+
+{% endblock %}
+
+
+
+
