@@ -1,14 +1,16 @@
 {% extends "base.html" %}
 {% block title %}
-    <title>Main Page</title>  <!- 继承父模板，但是重写了->
+<title>Main Page</title>
+<!-- 继承父模板，但是重写了-->
 {% endblock %}
 
 {% block navbar %}
-    {% include 'navbar.html' %}
+{% include 'navbar.html' %}
 {% endblock %}
 
 {% block app_content %}
-    <table class="table">
+<h1>Hello There</h1>
+<!-- <table class="table">
         <tbody>
         {% for p in data %}
             <tr>
@@ -22,7 +24,7 @@
             <h4>More than 50</h4>
         {% endif %}
         </tbody>
-    </table>
+    </table> -->
 
 
 {% endblock %}

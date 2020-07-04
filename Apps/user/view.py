@@ -5,10 +5,17 @@ from flask import Blueprint, render_template, request, redirect, url_for
 
 from Apps.user.model import User
 
+from sqlalchemy import or_
+
 # Create a blueprint and instantiated
 from extents import db
 
 user_bp = Blueprint('user', __name__)
+
+
+@user_bp.route('/index')
+def index():
+    return render_template('index.html')
 
 
 @user_bp.route('/register', methods=['GET', 'POST'])
@@ -62,3 +69,39 @@ def user_login():
         else:
             return 'User does not exist !'
     return render_template('user/login.html')
+
+
+@user_bp.route('/delete', methods=['GET', 'POST'])
+def user_delete():
+    uid = request.args.get('id')
+    User.query.filter_by(id=uid).delete()
+    db.session.commit()
+    return redirect(url_for('user.user_center'))
+
+@user_bp.route('/update', methods=['GET', 'POST'])
+def user_update():
+    if request.method  == 'POST':
+        username = request.form.get('username')
+        phone = request.form.get('phone')
+        uid = request.form.get('id')
+        user = User.query.get(uid)
+        user.name = username
+        user.phone = phone
+        db.session.commit()
+        return redirect(url_for('user.user_center'))
+    else:
+        uid = request.args.get('id')
+        user = User.query.get(uid)
+        return render_template('user/update.html', user=user)
+
+
+@user_bp.route('/search', methods=['GET', 'POST'])
+def user_search():
+    if request.method  == 'POST':
+        srkey = request.form.get('search')
+        search_list = User.query.filter(or_(User.name.contains(srkey), User.phone.contains(srkey)))
+        return render_template('user/center.html', search_list = search_list)
+    else:
+        return 'search failed'
+
+

@@ -1,20 +1,20 @@
 <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="/">Home</a>
+        <a class="navbar-brand" href="{{ url_for('user.index') }}">Home</a>
         <a class="navbar-brand" href="{{ url_for('user.user_login') }}">Login</a>
+        <a class="navbar-brand" href="{{ url_for('user.register') }}">Regist<span class="sr-only">(current)</span></a>
+        <a class="navbar-brand" href="{{ url_for('user.user_center') }}">Center</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
-                aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{ url_for('user.register') }}">
-                        regist<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="#">chiasang</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('user.user_center') }}">Center</a>
+                    <a class="nav-link" href="#">Center</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
