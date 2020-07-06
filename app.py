@@ -7,7 +7,7 @@ from flask_script import Manager
 # from flask import Flask, render_template, request, redirect, url_for
 from Apps import create_app
 from Apps.user.model import User
-from Apps.article.model import Article
+from Apps.article.model import *
 from extents import db
 
 app = create_app()
