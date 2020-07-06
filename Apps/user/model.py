@@ -17,9 +17,9 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(32), nullable=False)
     passwd = db.Column(db.String(64), nullable=False)
-    repass = db.Column(db.String(64), nullable=False)
-    phone = db.Column(db.String(16), unique=True)
+    email = db.Column(db.String(64))
+    phone = db.Column(db.String(16), unique=True, nullable=False)
+    photo = db.Column(db.String(128))
     rtime = db.Column(db.DateTime, default=datetime.now)
 
-    def __str__(self):
-        return self.name
+    articles = db.relationship('Article', backref='user')
