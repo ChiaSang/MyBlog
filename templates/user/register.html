@@ -9,11 +9,9 @@
 
 {% block app_content %}
     <div class="container" style="width: 50%">
-        <h4>Macro Form</h4>
         {% import 'macro.html' as signup %}
         {{ signup.form('/register', value='注册') }}
     </div>
-
 {% endblock %}
 
 

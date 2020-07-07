@@ -2,12 +2,13 @@ from datetime import datetime
 
 from extents import db
 
-class Article_Type(db.Model):
+
+class ArticleType(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     type_name = db.Column(db.String(16), nullable=False)
-    articles = db.relationship('Article', backref='articletype')
 
-
+    articles = db.relationship('Article', backref='article_type')
+    #  这里注意驼峰法命名的表对象在引用的时候要使用下划线如⬆️
 
 
 class Article(db.Model):
@@ -19,6 +20,7 @@ class Article(db.Model):
     love_num = db.Column(db.Integer, default=0)
     uid = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     type_id = db.Column(db.Integer, db.ForeignKey('article_type.id'), nullable=False)
+
     comments = db.relationship('Comment', backref='article')  # 通过文章找评论
 
 
@@ -32,6 +34,3 @@ class Comment(db.Model):
 
     def __str__(self):
         return self.comment
-
-
-

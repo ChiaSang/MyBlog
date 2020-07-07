@@ -2,10 +2,12 @@
 import hashlib
 
 from flask import Blueprint, render_template, request, redirect, url_for
+from werkzeug.security import check_password_hash, generate_password_hash
 
 from Apps.user.model import User
 
 from sqlalchemy import or_
+
 
 # Create a blueprint and instantiated
 from extents import db
@@ -15,7 +17,13 @@ user_bp = Blueprint('user', __name__)
 
 @user_bp.route('/index')
 def index():
-    return render_template('index.html')
+    #  request cookie to judge user whether login or not
+    uid = request.cookies.get('uid')
+    if uid:
+        user = User.query.get(uid)
+        return render_template('index.html', user=user)
+    else:
+        return render_template('index.html')
 
 
 @user_bp.route('/register', methods=['GET', 'POST'])
@@ -36,15 +44,14 @@ def register():
     elif passwd == repasswd:
         user = User()
         user.name = username
-        user.passwd = hashlib.md5(passwd.encode('utf-8')).hexdigest()
-        user.repass = hashlib.md5(repasswd.encode('utf-8')).hexdigest()
+        user.passwd = generate_password_hash(passwd)
+        user.repass = generate_password_hash(passwd)
         user.phone = phone
         db.session.add(user)
         db.session.commit()
         return redirect(url_for('user.user_center'))
     else:
         return '密码不一致'
-    # return render_template('user/register.html')
 
 
 @user_bp.route('/usercenter')
@@ -58,14 +65,16 @@ def user_login():
     if request.method == 'POST':
         username = request.form.get('user')
         passwd = request.form.get('passwd')
-        hash_passwd = hashlib.md5(passwd.encode('utf8')).hexdigest()
         users = User.query.filter_by(name=username)
         for user in users:
             if user.name == username:
-                if user.passwd == hash_passwd:
-                    return 'Login Success'
+                if check_password_hash(user.passwd, passwd):
+                    response = redirect(url_for('user.user_center'))
+                    #  set cookie to send user login status
+                    response.set_cookie('uid', str(user.id), max_age=600)
+                    return response
                 else:
-                    return render_template('user/login.html', msg='info Errors')
+                    return render_template('user/login.html', msg='信息有误!')
         else:
             return 'User does not exist !'
     return render_template('user/login.html')
@@ -77,6 +86,7 @@ def user_delete():
     User.query.filter_by(id=uid).delete()
     db.session.commit()
     return redirect(url_for('user.user_center'))
+
 
 @user_bp.route('/update', methods=['GET', 'POST'])
 def user_update():
@@ -105,3 +115,11 @@ def user_search():
         return 'search failed'
 
 
+@user_bp.route('/posts', methods=['GET', 'POST'])
+def posts_create():
+    if request.method  == 'POST':
+        uid = request.cookies.get('uid')
+        if uid:
+            return 'yes'
+    else:
+        pass

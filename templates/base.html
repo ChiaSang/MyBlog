@@ -3,41 +3,41 @@
 
 <head>
     {% block head %}
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        {% block styles %}
-            <!-- Bootstrap CSS -->
-            {{ bootstrap.load_css() }}
-        {% endblock %}
+    {% block styles %}
+    <!-- Bootstrap CSS -->
+    {{ bootstrap.load_css() }}
+    {% endblock %}
 
-        {% block title %}
-            {% if title %}
-                <title>{{ title }}</title>
-            {% else %}
-                <title>Flask Web</title>
-            {% endif %}
-        {% endblock %}
+    {% block title %}
+    {% if title %}
+    <title>{{ title }}</title>
+    {% else %}
+    <title>Flask Web</title>
+    {% endif %}
+    {% endblock %}
 
     {% endblock %}
 </head>
 
 <body>
-<!-- Your page content -->
-{% include 'navbar.html' %}
-{% block content %}
+    <!-- Your page content -->
+    {% include 'navbar.html' %}
+    {% block content %}
     <div class="container">
         {% block app_content %}
 
         {% endblock %}
     </div>
-{% endblock %}
+    {% endblock %}
 
-{% block scripts %}
+    {% block scripts %}
     <!-- Optional JavaScript -->
     {{ bootstrap.load_js() }}
-{% endblock %}
+    {% endblock %}
 </body>
 
 </html>

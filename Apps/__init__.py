@@ -9,11 +9,12 @@ import settings
 from Apps.user.view import user_bp
 from extents import db
 
+bootstrap = Bootstrap()
 
 def create_app():
     #  Set templates path
     app = Flask(__name__, template_folder='../templates', static_folder='../static')
-    bootstrap = Bootstrap(app)
+    bootstrap.init_app(app)
     #  import flask config file
     app.config.from_object(settings.DevConfig)
     #  blueprint

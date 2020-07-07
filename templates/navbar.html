@@ -1,35 +1,33 @@
-<head>
+<nav class="navbar navbar-expand-md navbar-light bg-white absolute-top">
+    <div class="container">
 
-    <nav class="navbar navbar-expand-md navbar-light bg-white absolute-top">
-        <div class="container">
+        <button class="navbar-toggler order-2 order-md-1" type="button" data-toggle="collapse"
+            data-target=".navbar-collapse" aria-controls="navbar-left navbar-right" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <button class="navbar-toggler order-2 order-md-1" type="button" data-toggle="collapse"
-                data-target=".navbar-collapse" aria-controls="navbar-left navbar-right" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse order-3 order-md-2" id="navbar-left">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item dropdown active">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">Home</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdown01">
-                            <a class="dropdown-item" href="{{ url_for('user.index') }}">Home</a>
-                            <a class="dropdown-item" href="{{ url_for('user.user_login') }}">Login</a>
-                            <a class="dropdown-item" href="{{ url_for('user.register') }}">Register</a>
-                            <a class="dropdown-item" href="{{ url_for('user.user_center') }}">Center</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">Posts</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdown02">
-                            <a class="dropdown-item" href="post-image.html">Image</a>
-                            <a class="dropdown-item" href="post-video.html">Video</a>
-                        </div>
-                    </li>
-                    <!-- <li class="nav-item dropdown">
+        <div class="collapse navbar-collapse order-3 order-md-2" id="navbar-left">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown active">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">Home</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown01">
+                        <a class="dropdown-item" href="{{ url_for('user.index') }}">Home</a>
+                        <a class="dropdown-item" href="{{ url_for('user.user_login') }}">Login</a>
+                        <a class="dropdown-item" href="{{ url_for('user.register') }}">Register</a>
+                        <a class="dropdown-item" href="{{ url_for('user.user_center') }}">Center</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">Posts</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown02">
+                        <a class="dropdown-item" href="post-image.html">Image</a>
+                        <a class="dropdown-item" href="post-video.html">Video</a>
+                    </div>
+                </li>
+                <!-- <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">Components</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown03">
@@ -43,25 +41,28 @@
                             <a class="dropdown-item" href="doc-typography.html">Typography</a>
                         </div>
                     </li> -->
-                </ul>
-            </div>
-
-            <a class="navbar-brand mx-auto order-1 order-md-3" href="{{ url_for('user.index') }}">ChiaSang Blog</a>
-
-            <div class="collapse navbar-collapse order-4 order-md-4" id="navbar-right">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="page-about.html">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="page-contact.html">Contact</a>
-                    </li>
-                </ul>
-                <form class="form-inline" role="search">
-                    <input class="search js-search form-control form-control-rounded mr-sm-2" type="text"
-                        title="Enter search query here.." placeholder="Search.." aria-label="Search">
-                </form>
-            </div>
+            </ul>
         </div>
-    </nav>
-</head>
+
+        <a class="navbar-brand mx-auto order-1 order-md-3" href="{{ url_for('user.index') }}">ChiaSang Blog</a>
+
+        <div class="collapse navbar-collapse order-4 order-md-4" id="navbar-right">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="page-about.html">About</a>
+                </li>
+                {% if user %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('user.user_center') }}">Hello {{ user.name }}</a>
+                </li>
+                {% else %}
+
+                {% endif %}
+            </ul>
+            <form class="form-inline" role="search">
+                <input class="search js-search form-control form-control-rounded mr-sm-2" type="text"
+                    title="Enter search query here.." placeholder="Search.." aria-label="Search">
+            </form>
+        </div>
+    </div>
+</nav>

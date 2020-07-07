@@ -1,30 +1,24 @@
 {% extends "base.html" %}
 {% block title %}
-<title>Main Page</title>
-<!-- 继承父模板，但是重写了-->
+<title>Home</title>
 {% endblock %}
 
-{% block navbar %}
-{% include 'navbar.html' %}
-{% endblock %}
 
 {% block app_content %}
-<h4>Hello There</h4>
-<!-- <table class="table">
-        <tbody>
-        {% for p in data %}
-            <tr>
-                <th> {{ p }} </th>
-            </tr>
-        {% endfor %}
+<div class="col-md-8 blog-main">
+    <h3 class="pb-4 mb-4 font-italic border-bottom">
+        博客
+    </h3>
 
-        {% if data|length < 50 %}
-            <h4>Less than 50</h4>
-        {% else %}
-            <h4>More than 50</h4>
-        {% endif %}
-        </tbody>
-    </table> -->
+    <div class="blog-post">
+        <h3 class="blog-post-title">博客标题</h3>
+        <p class="blog-post-meta">时间 <a href="#">作者</a></p>
 
+        <p>
+            我是博客内容
+        </p>
 
+    </div>
+
+</div>
 {% endblock %}

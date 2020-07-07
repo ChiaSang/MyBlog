@@ -1,6 +1,4 @@
 # -*- coding:utf-8 -*-
-# base.html为基本html，主体框架，其他页面继承自这个页面
-# navbar.html 导航页
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 # from markupsafe import escape
@@ -15,7 +13,7 @@ manager = Manager(app=app)
 migrate = Migrate(app=app, db=db)
 manager.add_command('db', MigrateCommand)
 
-from flask_bootstrap import Bootstrap
+# from flask_bootstrap import Bootstrap
 # import settings
 
 # app = Flask(__name__)
