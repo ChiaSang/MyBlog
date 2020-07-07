@@ -26,13 +26,13 @@
 <body>
 <!-- Your page content -->
 {% include 'navbar.html' %}
-<!-- {% block content %} -->
-    <div class="container" style="padding-top: 2    rem;">
+{% block content %}
+    <div class="container">
         {% block app_content %}
 
         {% endblock %}
     </div>
-<!-- {% endblock %} -->
+{% endblock %}
 
 {% block scripts %}
     <!-- Optional JavaScript -->
