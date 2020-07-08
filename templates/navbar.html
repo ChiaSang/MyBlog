@@ -14,9 +14,10 @@
                         aria-haspopup="true" aria-expanded="false">Home</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown01">
                         <a class="dropdown-item" href="{{ url_for('user.index') }}">Home</a>
-                        <a class="dropdown-item" href="{{ url_for('user.user_login') }}">Login</a>
-                        <a class="dropdown-item" href="{{ url_for('user.register') }}">Register</a>
+                        <!-- <a class="dropdown-item" href="{{ url_for('user.user_login') }}">Login</a>
+                        <a class="dropdown-item" href="{{ url_for('user.user_regist') }}">Register</a> -->
                         <a class="dropdown-item" href="{{ url_for('user.user_center') }}">Center</a>
+                        <a class="dropdown-item" href="#">About</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -27,42 +28,39 @@
                         <a class="dropdown-item" href="post-video.html">Video</a>
                     </div>
                 </li>
-                <!-- <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">Components</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdown03">
-                            <a class="dropdown-item" href="doc-alerts.html">Alerts</a>
-                            <a class="dropdown-item" href="doc-buttons.html">Buttons</a>
-                            <a class="dropdown-item" href="doc-cards.html">Cards</a>
-                            <a class="dropdown-item" href="doc-forms.html">Forms</a>
-                            <a class="dropdown-item" href="doc-icons.html">Icons</a>
-                            <a class="dropdown-item" href="doc-pagination.html">Pagination</a>
-                            <a class="dropdown-item" href="doc-tables.html">Tables</a>
-                            <a class="dropdown-item" href="doc-typography.html">Typography</a>
-                        </div>
-                    </li> -->
             </ul>
         </div>
 
-        <a class="navbar-brand mx-auto order-1 order-md-3" href="{{ url_for('user.index') }}">ChiaSang Blog</a>
+        <a class="text-dark mx-auto order-1 order-md-3" href="{{ url_for('user.index') }}">ChiaSang Blog</a>
 
         <div class="collapse navbar-collapse order-4 order-md-4" id="navbar-right">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="page-about.html">About</a>
-                </li>
+                </li> -->
                 {% if user %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('user.user_center') }}">Hello {{ user.name }}</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('user.user_logout') }}">Exit</a>
+                </li>
                 {% else %}
-
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('user.user_regist') }}">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('user.user_login') }}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('user.user_logout') }}">Exit</a>
+                </li>
                 {% endif %}
             </ul>
-            <form class="form-inline" role="search">
+            <!-- <form class="form-inline" role="search">
                 <input class="search js-search form-control form-control-rounded mr-sm-2" type="text"
                     title="Enter search query here.." placeholder="Search.." aria-label="Search">
-            </form>
+            </form> -->
         </div>
     </div>
 </nav>

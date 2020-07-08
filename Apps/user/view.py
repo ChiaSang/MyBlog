@@ -2,6 +2,7 @@
 import hashlib
 
 from flask import Blueprint, render_template, request, redirect, url_for
+from flask.globals import session
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from Apps.user.model import User
@@ -18,16 +19,17 @@ user_bp = Blueprint('user', __name__)
 @user_bp.route('/index')
 def index():
     #  request cookie to judge user whether login or not
-    uid = request.cookies.get('uid')
-    if uid:
-        user = User.query.get(uid)
+    # uid = request.cookies.get('uid')
+    if session.get('uid'):
+        index_uid = session.get('uid')
+        user = User.query.get(int(index_uid))
         return render_template('index.html', user=user)
     else:
         return render_template('index.html')
 
 
 @user_bp.route('/register', methods=['GET', 'POST'])
-def register():
+def user_regist():
     """
     # Create a register fun
     :return:
@@ -49,15 +51,20 @@ def register():
         user.phone = phone
         db.session.add(user)
         db.session.commit()
-        return redirect(url_for('user.user_center'))
+        # return redirect(url_for('user.user_center'))
+        return render_template('user/center')
     else:
         return '密码不一致'
 
 
 @user_bp.route('/usercenter')
 def user_center():
-    users = User.query.all()
-    return render_template('user/center.html', users=users)
+    if session.get('uid'):
+        seuid = session.get('uid') #  返回为字符串
+        user = User.query.get(int(seuid))
+        return render_template('user/center.html', user=user)
+    else:
+        return '未登入......'
 
 
 @user_bp.route('/login', methods=['GET', 'POST'])
@@ -69,15 +76,23 @@ def user_login():
         for user in users:
             if user.name == username:
                 if check_password_hash(user.passwd, passwd):
+                    session['uid'] = user.id
                     response = redirect(url_for('user.user_center'))
                     #  set cookie to send user login status
-                    response.set_cookie('uid', str(user.id), max_age=600)
+                    # response.set_cookie('uid', str(user.id), max_age=30)
                     return response
                 else:
                     return render_template('user/login.html', msg='信息有误!')
         else:
             return 'User does not exist !'
     return render_template('user/login.html')
+
+
+@user_bp.route('/logout', methods=['GET', 'POST'])
+def user_logout():
+    del session['uid']
+    response = redirect(url_for('user.index'))
+    return response
 
 
 @user_bp.route('/delete', methods=['GET', 'POST'])

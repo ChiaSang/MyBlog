@@ -9,6 +9,7 @@ import settings
 from Apps.user.view import user_bp
 from extents import db
 
+
 bootstrap = Bootstrap()
 
 def create_app():
