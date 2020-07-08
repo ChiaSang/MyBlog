@@ -1,33 +1,29 @@
 {% extends "base.html" %}
 {% block title %}
-    <title>Sign In</title>  <!-- 继承父模板，但是重写了-->
+<title>Sign In</title> <!-- 继承父模板，但是重写了-->
 {% endblock %}
 
 {% block navbar %}
-    {% include 'navbar.html' %}
+{% include 'navbar.html' %}
 {% endblock %}
 
 {% block app_content %}
-    <div class="container">
-        <form action="{{ url_for('user.user_login') }}" method="POST">
-            <div class="form-group row">
-                <label for="inputEmail3" class="col-md-2 col-form-label">Email</label>
-                <div class="col-sm-8">
-                    <input type="email" class="form-control" id="inputEmail3" name="user">
-                </div>
+<div class="container">
+    <form action="{{ url_for('user.user_login') }}" method="POST">
+        <div class="form-group row">
+            <label for="inputEmail3" class="col-md-2 col-form-label">Username</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" id="inputEmail3" name="user">
             </div>
-            <div class="form-group row">
-                <label for="inputPassword3" class="col-md-2 col-form-label">Password</label>
-                <div class="col-sm-8">
-                    <input type="password" class="form-control" id="inputPassword3" name="passwd">
-                </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputPassword3" class="col-md-2 col-form-label">Password</label>
+            <div class="col-sm-8">
+                <input type="password" class="form-control" id="inputPassword3" name="passwd">
             </div>
-            <p style="color: red">{{ msg }}</p>
-            <button type="submit" class="btn btn-primary">登入</button>
-        </form>
-    </div>
+        </div>
+        <p style="color: red">{{ msg }}</p>
+        <button type="submit" class="btn btn-primary">登入</button>
+    </form>
+</div>
 {% endblock %}
-
-
-
-

@@ -4,21 +4,71 @@
 {% endblock %}
 
 
+
 {% block app_content %}
-<div class="col-md-8 blog-main">
-    <h3 class="pb-4 mb-4 font-italic border-bottom">
-        博客
-    </h3>
+<div class="row">
+    <div class="col-md-10">
 
-    <div class="blog-post">
-        <h3 class="blog-post-title">博客标题</h3>
-        <p class="blog-post-meta">时间 <a href="#">作者</a></p>
+        <div class="col-md-10 blog-main">
+            <h3 class="pb-4 mb-4 font-italic border-bottom">
+                博客
+            </h3>
 
-        <p>
-            我是博客内容
-        </p>
+            <div class="blog-post">
+                <h5 class="pb-2 mb-4 font-italic border-bottom">博客标题</h5>
+                <p class="blog-post-meta">时间 <a href="#">作者</a></p>
+                <p>
+                    前言
+                    完善度 
+                    模拟机型macmini2018
 
+                    BIOS                :已加入补丁,051以上都可以,其中071修复了屏蔽设备还会出现在设备管理器中的bug,建议升级
+
+                    显卡 iris plus655 :HDMI 4K 60HZ可能会出现闪屏,粉屏问题（有网友反应可以用switchX等工具修改帧率为50,并修改显示模式为NTSC
+                    可以解决，有利有弊自己定夺）,目前最好的解决方案是用雷电3转DP
+
+                    声卡 ALC235    :通过AppleALC仿冒,使用正常,但耳机孔开关机会有爆音,DP HDMI音频正常
+
+                    有线网卡          :有第三方驱动,使用基本没问题,但有人反映千兆会降级为百兆
+
+                    无线网卡与蓝牙 :无线网卡无解,板载蓝牙可以使用但是需要通过Windows热启动或者虚拟机接管 不建议使用 
+
+                    雷电3              :显卡拓展坞是可以用的,转DP也可以,USBHUB应该也灭问题.已打热插拔补丁,有没有效就不知道了 虽然不会出现在雷电选项卡中,但可以正常使用
+
+                    USB              :USB如果使用过程中可能出现 睡眠问题,板载蓝牙不能使用的问题,参考下面的第13条定制USB
+
+                    读卡器            :可以驱动但没必要,速度很慢且不稳定.目前有两位大佬有了读卡器魔改方案,即吹掉读卡器利用其PCIE,转接无线网卡,这样可以保留M.2口.
+
+                    我目前的方案:
+                    牺牲M.2口,更换转接板+拆机卡BCM94360CS2,并屏蔽板载无线网卡与蓝牙(这点很重要),屏蔽读卡器,加一块SATA硬盘
+
+                    可能遇到的不确定因素:
+                    1.有些人同样的机型 ,用我相同的配置依旧会出现莫名其妙的问题.这个原因未知.但大部分人是正常的.
+
+                    2.睡眠唤醒,这个主要跟USB有关,请参考第13条.
+
+                    3.换了拆机卡 网卡与蓝牙还是不能用,首先要确定,板载无线跟蓝牙是不是已经禁用,其次最好在Windows下能不能识别到.另拆机卡改装稍微有一点难度,一定确保自己操作没有失误
+
+                    4.用了USB无线跟蓝牙 怎么没法用呢
+                    1.无线网卡大部分是要驱动的,请自行爬楼,2.蓝牙可以用BRCMBluetoothinjector来仿冒。也可以直接直接用我定制的FakePCIID-NUC8.kext.
+
+                    5.为啥要用拆机卡或者魔改呢?主要是为了无线网卡跟蓝牙,我个人的话觉得用USB的话就太不美观了.魔改也是这个目的,并且好处是可以保留M.2.
+
+                    注意事项
+
+                    作者：豪客88
+                    链接：https://www.jianshu.com/p/2b8516276147
+                    来源：简书
+                    著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+                </p>
+            </div>
+        </div>
     </div>
-
+    <div class="col-6 col-md-2">
+        <div style="height: 10rem;"></div>
+        <div>
+            <p>lalalalalala</p>
+        </div>
+    </div>
 </div>
 {% endblock %}
