@@ -80,7 +80,7 @@ def user_regist():
         user.phone = phone
         db.session.add(user)
         db.session.commit()
-        # return redirect(url_for('user.user_center'))
+        # return redirect(url_for(user.user_center'))
         return redirect(url_for('user.index'))
     else:
         return '密码不一致'
