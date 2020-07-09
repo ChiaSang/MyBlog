@@ -1,5 +1,4 @@
 # Define user view fun
-import hashlib
 
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask.globals import session, g
