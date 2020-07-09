@@ -6,6 +6,7 @@ from flask.globals import session, g
 
 from werkzeug.security import check_password_hash, generate_password_hash
 
+from Apps.user.form import RegisterForm
 from Apps.user.model import User
 
 from sqlalchemy import or_
@@ -61,29 +62,54 @@ def index():
 
 @user_bp.route('/register', methods=['GET', 'POST'])
 def user_regist():
-    if request.method == 'GET':
-        return render_template('user/register.html')
-    username = request.form.get('user')
-    email = request.form.get('email')
-    passwd = request.form.get('passwd')
-    repasswd = request.form.get('repasswd')
-    phone = request.form.get('phone')
-    if User.query.filter_by(phone=phone) == phone:
-        flash('手机号已经被注册')
-        return redirect(url_for('user.user_regist'))
-    elif passwd == repasswd:
+    rform = RegisterForm()
+    if rform.validate_on_submit():
+        username = rform.username.data
+        email = rform.email.data
+        passwd = rform.password.data
+        repasswd = rform.confirm.data
+        phone = rform.phone.data
         user = User()
         user.name = username
         user.email = email
         user.passwd = generate_password_hash(passwd)
-        user.repass = generate_password_hash(passwd)
         user.phone = phone
         db.session.add(user)
         db.session.commit()
         # return redirect(url_for(user.user_center'))
         return redirect(url_for('user.index'))
     else:
-        return '密码不一致'
+        return render_template('user/register.html', form=rform)
+        # return '密码不一致'
+    # return render_template('user/register.html', form=rform)
+    # if request.method == 'GET':
+    #     rform = RegisterForm()
+    #     if rform.validate_on_submit():
+    #         return render_template('user/register.html', form=rform)
+    #     else:
+    #         return render_template('user/register.html', form=rform)
+    # else:
+    #     # return render_template('user/register.html')
+    #     username = request.form.get('username')
+    #     email = request.form.get('email')
+    #     passwd = request.form.get('password')
+    #     repasswd = request.form.get('confirm')
+    #     phone = request.form.get('phone')
+    #     if User.query.filter_by(phone=phone) == phone:
+    #         flash('手机号已经被注册')
+    #         return redirect(url_for('user.user_regist'))
+    #     elif passwd == repasswd:
+    #         user = User()
+    #         user.name = username
+    #         user.email = email
+    #         user.passwd = generate_password_hash(passwd)
+    #         user.phone = phone
+    #         db.session.add(user)
+    #         db.session.commit()
+    #         # return redirect(url_for(user.user_center'))
+    #         return redirect(url_for('user.index'))
+    #     else:
+    #         return '密码不一致'
 
 
 @user_bp.route('/usercenter')
@@ -182,3 +208,7 @@ def user_search():
 def user_info():
     if session.get('uid'):
         return render_template('user/info.html', user=g.user)
+#  =========================================================================
+@user_bp.route('/nav')
+def nav():
+    return  render_template('navbar.html')
