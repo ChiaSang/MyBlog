@@ -1,5 +1,6 @@
 import re
 
+from flask import flash
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
@@ -19,6 +20,7 @@ class RegisterForm(FlaskForm):
     def validate_username(self, username):
         user = User.query.filter_by(name=username.data).first()
         if user:
+            flash('用户已存在')
             raise ValidationError('Username already existed')
 
     def validate_phone(self, phone):
@@ -26,3 +28,5 @@ class RegisterForm(FlaskForm):
             phone_num = User.query.filter_by(phone=phone.data).first()
             if phone_num:
                 raise ValidationError('Phone Number Error')
+        else:
+            flash('手机号不正确')
