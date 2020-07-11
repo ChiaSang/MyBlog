@@ -2,7 +2,7 @@ import re
 
 from flask import flash
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 
 from Apps.user.model import User
@@ -30,3 +30,10 @@ class RegisterForm(FlaskForm):
                 raise ValidationError('Phone Number Error')
         else:
             flash('手机号不正确')
+
+
+class LoginForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired(), Length(min=4, max=16)])
+    password = PasswordField('Password', validators=[DataRequired(), Length(min=8, max=16)])
+    remember = BooleanField('Remember')
+    submit = SubmitField('Login')

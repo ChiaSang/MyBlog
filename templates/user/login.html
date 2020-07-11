@@ -1,29 +1,38 @@
 {% extends "base.html" %}
 {% block title %}
-<title>Sign In</title> <!-- 继承父模板，但是重写了-->
+    <title>Sign In</title> <!-- 继承父模板，但是重写了-->
 {% endblock %}
 
-{% block navbar %}
-{% include 'navbar.html' %}
-{% endblock %}
 
 {% block app_content %}
-<div class="container">
-    <form action="{{ url_for('user.user_login') }}" method="POST">
-        <div class="form-group row">
-            <label class="col-md-2 col-form-label">Username</label>
-            <div class="col-sm-8">
-                <input type="text" class="form-control" id="inputEmail3" name="user">
-            </div>
+    <h1>Login Now</h1>
+    <div class="row">
+        <div class="col-md-4">
+            {% from 'bootstrap/form.html' import render_form, render_field %}
+            {% for message in get_flashed_messages() %}
+                <div class="alert alert-info" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {{ render_form(form) }}
         </div>
-        <div class="form-group row">
-            <label class="col-md-2 col-form-label">Password</label>
-            <div class="col-sm-8">
-                <input type="password" class="form-control" name="passwd">
-            </div>
-        </div>
-        <p style="color: red">{{ msg }}</p>
-        <button type="submit" class="btn btn-primary">登入</button>
-    </form>
-</div>
+    </div>
+
+    {#    <form action="{{ url_for('user.user_login') }}" method="POST">#}
+    {#        <div class="form-group row">#}
+    {#            <label class="col-md-2 col-form-label">Username</label>#}
+    {#            <div class="col-sm-8">#}
+    {#                <input type="text" class="form-control" id="inputEmail3" name="user">#}
+    {#            </div>#}
+    {#        </div>#}
+    {#        <div class="form-group row">#}
+    {#            <label class="col-md-2 col-form-label">Password</label>#}
+    {#            <div class="col-sm-8">#}
+    {#                <input type="password" class="form-control" name="passwd">#}
+    {#            </div>#}
+    {#        </div>#}
+    {#        <p style="color: red">{{ msg }}</p>#}
+    {#        <button type="submit" class="btn btn-primary">登入</button>#}
+    {#    </form>#}
+    <!-- </div> -->
 {% endblock %}

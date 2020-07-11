@@ -10,101 +10,9 @@
         {% block styles %}
             <!-- Bootstrap CSS -->
             {{ bootstrap.load_css() }}
-        {% endblock %}
+            <link rel="stylesheet" href="../static/css/bootstrap.css" type="text/css">
+            <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css">
 
-
-        {#        {% block mystyles %}#}
-        {#            {{ super() }}#}
-        {#            navbar-band{#}
-        {#            color:#7c7c7d;#}
-        {#            }#}
-        {#        {% endblock %}#}
-
-        {% block navbar %}
-            <nav class="navbar navbar-expand-md navbar-light bg-white absolute-top container">
-                <div class="container">
-
-                    <button class="navbar-toggler order-2 order-md-1" type="button" data-toggle="collapse"
-                            data-target=".navbar-collapse" aria-controls="navbar-left navbar-right"
-                            aria-expanded="false"
-                            aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-
-                    <div class="collapse navbar-collapse order-3 order-md-2" id="navbar-left">
-                        <ul class="navbar-nav mr-auto">
-                            <a class="nav-link" href="{{ url_for('user.index') }}">Home</a>
-                            {% if user %}
-                                <a class="nav-link" href="{{ url_for('user.user_info') }}">Info</a>
-                                <a class="nav-link" href="{{ url_for('user.user_center') }}">Center</a>
-                            {% else %}
-
-                            {% endif %}
-                            <a class="nav-link" href="#">About</a>
-                            {#                            <li class="nav-item dropdown active">#}
-                            {#                                <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown"#}
-                            {#                                   aria-haspopup="true" aria-expanded="false">Home</a>#}
-                            {#                                <div class="dropdown-menu" aria-labelledby="dropdown01">#}
-                            {#                                    <a class="dropdown-item" href="{{ url_for('user.index') }}">Home</a>#}
-                            {#                                    {% if user %}#}
-                            {#                                        <a class="dropdown-item" href="{{ url_for('user.user_info') }}">Info</a>#}
-                            {#                                    {% else %}#}
-                            {##}
-                            {#                                    {% endif %}#}
-                            {#                                    <!-- <a class="dropdown-item" href="{{ url_for('user.user_regist') }}">Register</a> -->#}
-                            {#                                    <a class="dropdown-item" href="{{ url_for('user.user_center') }}">Center</a>#}
-                            {#                                    <a class="dropdown-item" href="#">About</a>#}
-                            {#                                </div>#}
-                            {#                            </li>#}
-{#                            <li class="nav-item dropdown">#}
-{#                                <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown"#}
-{#                                   aria-haspopup="true" aria-expanded="false">Posts</a>#}
-{#                                <div class="dropdown-menu" aria-labelledby="dropdown02">#}
-{#                                    <a class="dropdown-item" href="post-image.html">Image</a>#}
-{#                                    <a class="dropdown-item" href="post-video.html">Video</a>#}
-{#                                </div>#}
-{#                            </li>#}
-                        </ul>
-                    </div>
-
-                    {#                    <a class="text-dark mx-auto order-1 order-md-3" href="{{ url_for('user.index') }}">ChiaSang Blog</a>#}
-
-                    <div class="collapse navbar-collapse order-4 order-md-4" id="navbar-right">
-                        <ul class="navbar-nav ml-auto">
-                            <!-- <li class="nav-item">
-                                <a class="nav-link" href="page-about.html">About</a>
-                            </li> -->
-                            {% if user %}
-                                <li class="nav-item">
-                                    <a class="nav-link"
-                                       href="{{ url_for('user.user_center') }}">Hello {{ user.name }}</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url_for('user.user_logout') }}">Exit</a>
-                                </li>
-                            {% else %}
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url_for('user.user_regist') }}">Sign up</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url_for('user.user_login') }}">
-                                        <svg width="1em" height="1em"
-                                             viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor"
-                                             xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd"
-                                                  d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                                        </svg>
-                                        Sign in</a>
-                                </li>
-                            {% endif %}
-                        </ul>
-                        <!-- <form class="form-inline" role="search">
-                            <input class="search js-search form-control form-control-rounded mr-sm-2" type="text"
-                                title="Enter search query here.." placeholder="Search.." aria-label="Search">
-                        </form> -->
-                    </div>
-                </div>
-            </nav>
         {% endblock %}
 
         {% block title %}
@@ -115,13 +23,82 @@
             {% endif %}
         {% endblock %}
 
+
+        {% block navbar %}
+
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+                <div class="container">
+                    <a class="navbar-brand" href="{{ url_for('user.index') }}">CHIASANG{% if admin %}
+                        {{ admin.name }}{% endif %}</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+                            aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarColor01">
+                        <form class="form-inline form-navbar my-2 my-lg-0 order-2" action="#">
+                            <input class="form-control" name="s" type="text" placeholder="Search">
+                        </form>
+                        <ul class="navbar-nav mr-auto">
+                            <a class="nav-item nav-link" href="{{ url_for('user.index') }}">Home</a>
+                            <a class="nav-item nav-link " href="#">About</a>
+                            {% if user %}
+
+                                <a class="nav-item nav-link {% if request.endpoint == '/info' %} active {% endif %}"
+                                   href="{{ url_for('user.user_info') }}">Info</a>
+                                <a class="nav-item nav-link {% if request.endpoint == 'user/center' %} active {% endif %}"
+                                   href="{{ url_for('user.user_center') }}">Center</a>
+                            {% else %}
+
+                            {% endif %}
+
+                            <li class="nav-item-divider"></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right"></ul>
+                        <ul class="navbar-nav d-none d-lg-flex ml-2 order-3">
+                            {% if current_user.is_authenticated %}
+                                <li class="nav-item navbar-right"><a class="nav-link"
+                                                                     href="{{ url_for('user.user_info') }}">Hello
+                                    {{ username }}</a></li>
+                                <li class="nav-item navbar-right"><a class="nav-link"
+                                                                     href="{{ url_for('user.user_logout') }}">Exit</a>
+                                </li>
+                            {% else %}
+
+                                <li class="nav-item navbar-right"><a class="nav-link"
+                                                                     href="{{ url_for('user.user_login') }}">Sign in</a>
+                                </li>
+                                <li class="nav-item navbar-right"><a class="nav-link"
+                                                                     href="{{ url_for('user.user_regist') }}">Sign
+                                    up</a></li>
+
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        {% endblock %}
+
     {% endblock %}
 </head>
 
 <body>
+
 <!-- Your page content -->
-{#{% include 'navbar.html' %}#}
+
 {% block content %}
+    <div class="container">
+        <div class="jumbotron">
+            <h1 class="display-3">Hello, world!</h1>
+            <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention
+                to
+                featured content or information.</p>
+            <hr class="my-4">
+            <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+            <p class="lead">
+                <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+            </p>
+        </div>
+    </div>
     <div class="container">
         {% block app_content %}
 

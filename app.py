@@ -4,6 +4,7 @@ from flask_script import Manager
 # from markupsafe import escape
 # from flask import Flask, render_template, request, redirect, url_for
 from Apps import create_app
+from Apps.fakes import fakeme
 from Apps.user.model import User
 from Apps.article.model import *
 from extents import db
@@ -12,6 +13,7 @@ app = create_app()
 manager = Manager(app=app)
 migrate = Migrate(app=app, db=db)
 manager.add_command('db', MigrateCommand)
+manager.add_command('fakeme', fakeme)
 
 # from flask_bootstrap import Bootstrap
 # import settings
