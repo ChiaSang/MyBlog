@@ -18,7 +18,7 @@ class Article(db.Model):
     create_time = db.Column(db.DateTime, default=datetime.now)
     click_num = db.Column(db.Integer, default=0)
     love_num = db.Column(db.Integer, default=0)
-    uid = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)  # L2
+    # uid = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)  # L2
     type_id = db.Column(db.Integer, db.ForeignKey('article_type.id'), nullable=False)  # L1
 
     # type = db.relationship('ArticleType', backref='article')

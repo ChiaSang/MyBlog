@@ -19,7 +19,7 @@ class User(db.Model, UserMixin):
     photo = db.Column(db.String(128))
     rtime = db.Column(db.DateTime, default=datetime.now)
 
-    articles = db.relationship('Article', backref='user')  # L2
+    # articles = db.relationship('Article', backref='user')  # L2
 
     def get_id(self):
         return self.id
