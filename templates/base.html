@@ -6,30 +6,24 @@
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
         {% block styles %}
-            <!-- Bootstrap CSS -->
-            {{ bootstrap.load_css() }}
+            {#            {{ bootstrap.load_css() }}#}
             <link rel="stylesheet" href="../static/css/bootstrap.css" type="text/css">
             <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css">
-            <style>
-                nav {
-                    margin-bottom: 20px;
-                }
-            </style>
+            <link rel="stylesheet" href="../static/style.css" type="text/css">
+
         {% endblock %}
 
         {% block title %}
             {% if title %}
                 <title>{{ title }}</title>
             {% else %}
-                <title>Flask Web</title>
+                <title>ChiaSang Flask Web</title>
             {% endif %}
         {% endblock %}
 
 
         {% block navbar %}
-
             <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
                 <div class="container">
                     <a class="navbar-brand" href="{{ url_for('user.index') }}">CHIASANG{% if admin %}
@@ -87,18 +81,48 @@
 
 <body>
 
-<!-- Your page content -->
 
 {% block content %}
     <div class="container">
         {% block app_content %}
 
         {% endblock %}
+
+        {#        <footer class="bd-footer text-muted">#}
+        {#            <div class="container-fluid p-3 p-md-5">#}
+        {#                <p class="float-lg-right"><a href="#top">Back to top</a></p>#}
+        {#                <p>Designed and built with all the love in the world by the <a href="/docs/4.5/about/team/">Bootstrap#}
+        {#                    team</a> with the help of <a href="https://github.com/twbs/bootstrap/graphs/contributors">our#}
+        {#                    contributors</a>.</p>#}
+        {#                <p>Currently v4.5.0. Code licensed <a href="https://github.com/twbs/bootstrap/blob/main/LICENSE"#}
+        {#                                                      target="_blank" rel="license noopener">MIT</a>, docs <a#}
+        {#                        href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="license noopener">CC BY#}
+        {#                    3.0</a>.</p>#}
+        {#            </div>#}
+        {#        </footer>#}
+
+
+    </div>
+
+    <div class="container-fluid">
+        <footer class="bd-footer text-muted">
+            <div class="container-fluid p-3 p-md-5">
+                <p class="float-lg-right"><a href="#top">Back to top</a></p>
+                {#                <button type="button" class="btn btn-primary disabled"><a href="#top">Back to top</a></button>#}
+                <p>Designed and built with all the love in the world by the <a href="/docs/4.5/about/team/">Bootstrap
+                    team</a> with the help of <a href="https://github.com/twbs/bootstrap/graphs/contributors">our
+                    contributors</a>.</p>
+                <p>Currently v4.5.0. Code licensed <a href="https://github.com/twbs/bootstrap/blob/main/LICENSE"
+                                                      target="_blank" rel="license noopener">MIT</a>, docs <a
+                        href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="license noopener">CC BY
+                    3.0</a>.</p>
+            </div>
+        </footer>
     </div>
 
 
-
 {% endblock %}
+
 
 {% block scripts %}
     <!-- Optional JavaScript -->

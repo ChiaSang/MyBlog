@@ -21,6 +21,10 @@ class User(db.Model, UserMixin):
 
     # articles = db.relationship('Article', backref='user')  # L2
 
+    @property
+    def password(self):
+        raise AttributeError('password is not a readable attribute')
+
     def get_id(self):
         return self.id
 

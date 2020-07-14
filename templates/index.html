@@ -1,13 +1,8 @@
 {% extends "base.html" %}
-{% block title %}
-    <title>Home</title>
-{% endblock %}
+{#{% block title %}#}
+{#    <title>Home</title>#}
+{#{% endblock %}#}
 
-
-{% block styles %}
-    {{ super() }}
-    <link rel="stylesheet" href="{{ url_for('static', filename='mystyle.css') }}">
-{% endblock %}
 
 {% block app_content %}
     {% from 'bootstrap/utils.html' import render_messages %}
@@ -28,7 +23,7 @@
 
     <div class="page-header" id="banner">
         <div class="row">
-            <div class="col-lg-8 col-md-7 col-sm-6">
+            <div class="col-md-9">
                 <h1>Fly in the sky and Dream there</h1>
                 <p class="lead">A touch of warmth</p>
             </div>
@@ -36,65 +31,59 @@
     </div>
 
     <div class="row">
+
         <div class="col-md-9">
             {#            {% if articles %}#}
             {#                {% for article in articles %}            #}
+
+            <!-- 一个Post-Card -->
+
             {% if pagination %}
                 {% for article in pagination.items %}
-
-                    {#                    <div class="card border-light mb-3"">#}
-                    {#                    <div class="card-header">Header</div>#}
-                    {#                    <div class="card-body">#}
-                    {#                        <h4 class="card-title">Light card title</h4>#}
-                    {#                        <p class="card-text">Some quick example text to build on the card title and make up the bulk#}
-                    {#                            of the card's content.</p>#}
-                    {#                    </div>#}
-                    {#                    </div>#}
-
-                    <!-- 一个Post-Card -->
-
-                    <div class="card border-soil mb-3">
+                    <div class="card mb-3">
                         <div class="card-body">
-                            <div class="bg-light" id="card-title">
-                                <h5 class=class="card-header ">{{ article.title }}</h5>
+                            <a href="{{ url_for('article.post') }}?pid={{ article.id }}"><h4
+                                    class="card-title text-primary" style="color: #3a3d46">{{ article.title }}</h4></a>
+                            <div style="overflow: auto;padding-bottom: 1rem">
+                                <span class="badge badge-pill"
+                                      style="background-color: #595959;color: #ffffff">{{ article.article_type.type_name }}</span>
+                                <small class="text-muted form-control-sm">{{ article.create_time }}</small>
+                                <span class="text-muted"
+                                      style="display: inline-block;float: right">{{ article.title }}</span>
                             </div>
-                            <span class="badge badge-secondary">{{ article.article_type.type_name }}</span>
-                            <small>{{ article.create_time }}</small>
-                            <p class="card-text">{{ article.content[:255] }}...</p>
+                            <p>{{ article.content[:255] }}...</p>
+                            <a href="{{ url_for('article.post') }}?pid={{ article.id }}" class="card-link"
+                               style="float: right"><small>Read More</small></a>
                         </div>
                     </div>
 
-                    <!-- 一个Post-Card 样式调过 -->
-
-
-                    <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">List group item heading</h5>
-                                <small>3 days ago</small>
-                            </div>
-                            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget
-                                risus varius blandit.</p>
-                            <small>Donec id elit non mi porta.</small>
-                        </a>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">Card title</h4>
-                            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the card's content.</p>
-                            <a href="#" class="card-link">Card link</a>
-                            <a href="#" class="card-link">Another link</a>
-                        </div>
-                    </div>
+                    {#                                        <div class="list-group">#}
+                    {#                                            <div href="#"#}
+                    {#                                                 class="list-group-item list-group-item-action flex-column align-items-start active">#}
+                    {#                                                <div class="d-flex w-100 justify-content-between">#}
+                    {#                                                    <a href="{{ url_for('article.post') }}?pid={{ article.id }}" style="color: #0c1722"><h4#}
+                    {#                                                            class="mb-1">{{ article.title }}</h4></a>#}
+                    {#                                                    <small style="margin-bottom: 0rem">{{ article.create_time }}</small>#}
+                    {#                                                </div>#}
+                    {#                                            </div>#}
+                    {#                                        </div>#}
+                    {##}
+                    {#                                        <div class="card" style="margin-bottom: 25px">#}
+                    {#                                            <div class="card-body">#}
+                    {#                                                <h4 class="card-title">Card title</h4>#}
+                    {#                                                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>#}
+                    {#                                                <p class="card-text">{{ article.content[:255] }}...</p>#}
+                    {#                                                <a href="#" class="card-link">Card link</a>#}
+                    {#                                                <a href="#" class="card-link">Another link</a>#}
+                    {#                                            </div>#}
+                    {#                                        </div>#}
 
                 {% endfor %}
             {% else %}
                 <h3>No Posts</h3>
             {% endif %}
 
+            <!-- 一个Post-Card 样式调过 -->
 
             <div class="col-md-9 offset-md-3">
                 <ul class="pagination">
@@ -121,12 +110,11 @@
                 {% from 'bootstrap/pagination.html' import render_pager %}
                 {{ render_pager(pagination) }}
 
-                </divv>
-
             </div>
 
         </div>
 
+        <!-- 侧栏 -->
         <div class="col-md-3">
 
             <ul class="list-group">
@@ -134,7 +122,7 @@
                     {% for type in types %}
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             {{ type.type_name }}
-                            <span class="badge badge-primary badge-pill">14</span>
+                            <span class="badge badge-light">15</span>
                         </li>
                     {% endfor %}
                 {% else %}
@@ -153,6 +141,7 @@
             </div>
 
         </div>
+
     </div>
 
 

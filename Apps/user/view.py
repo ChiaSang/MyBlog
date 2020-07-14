@@ -74,8 +74,8 @@ def index():
     print("=====================主页=====================\n\n", session.get('_id'), session.get('user_id'))
 
     page = request.args.get('page', 1, type=int)
-    # articles = Article.query.order_by(-Article.create_time).all()  # 逆序排列获取posts
     pagination = Article.query.order_by(-Article.create_time).paginate(page=page, per_page=5)
+    type_num = Article.query.order_by(Article.type_id).all()
     types = ArticleType.query.all()
     # if current_user.is_authenticated:
     # #  request cookie to judge user whether login or not
@@ -87,7 +87,7 @@ def index():
     #     # 通过cookies判断首页登入状态
     # return render_template('index.html', username=current_user.name, types=types, pagination=pagination)
     # else:
-    return render_template('index.html', types=types, pagination=pagination)
+    return render_template('index.html', types=types, pagination=pagination, type_num=type_num)
 
 
 @user_bp.route('/register', methods=['GET', 'POST'])
