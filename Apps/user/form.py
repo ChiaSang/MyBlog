@@ -13,8 +13,8 @@ class RegisterForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired(), Length(min=8, max=16)])
     confirm = PasswordField('rePassword', validators=[DataRequired(), EqualTo('password')])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    phone = StringField('Phone',
-                        validators=[DataRequired(), Length(min=11, max=11, message='Phone Number is equal to 11 bit')])
+    # phone = StringField('Phone',
+    #                     validators=[DataRequired(), Length(min=11, max=11, message='Phone Number is equal to 11 bit')])
     submit = SubmitField('Register')
 
     def validate_username(self, username):
@@ -23,13 +23,13 @@ class RegisterForm(FlaskForm):
             flash('用户已存在')
             raise ValidationError('Username already existed')
 
-    def validate_phone(self, phone):
-        if re.search(r'^1[35678]\d{9}$', phone.data).group():
-            phone_num = User.query.filter_by(phone=phone.data).first()
-            if phone_num:
-                raise ValidationError('Phone Number Error')
-        else:
-            flash('手机号不正确')
+    # def validate_phone(self, phone):
+    #     if re.search(r'^1[35678]\d{9}$', phone.data).group():
+    #         phone_num = User.query.filter_by(phone=phone.data).first()
+    #         if phone_num:
+    #             raise ValidationError('Phone Number Error')
+    #     else:
+    #         flash('手机号不正确')
 
 
 class LoginForm(FlaskForm):

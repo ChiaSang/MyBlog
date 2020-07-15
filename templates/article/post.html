@@ -2,13 +2,27 @@
 {% block app_content %}
 
     {% if post %}
-        <div class="card border-dark mb-3">
-            <div class="card-header">{{ post.title }}</div>
-            <div class="card-body">
-                <h4 class="card-title">{{ post.article_type.type_name }}</h4>
-                <p class="card-text">{{ post.content }}</p>
+        {#        <div class="card border-dark mb-3">#}
+        {#            <div class="card-header">{{ post.title }}</div>#}
+        {#            <div class="card-body">#}
+        {#                <h4 class="card-title">{{ post.article_type.type_name }}</h4>#}
+        {#                <p class="card-text">{{ post.content }}</p>#}
+        {#            </div>#}
+        {#        </div>#}
+
+        <div class="card-body">
+            <h4 class="card-title text-primary">{{ post.title }}</h4>
+            <div id="card-sub-info"><span class="badge badge-pill"
+                                          id="card-badge-pill">{{ post.article_type.type_name }}</span>
+                <small class="text-muted form-control-sm">{{ post.create_time }}</small>
+                {#                <span class="text-muted" style="display: inline-block;float: right">{{ comments.article|length }}</span>#}
+                {#                <span class="text-muted" style="display: inline-block;float: right">{{ post. }}</span>#}
+                <span class="badge badge-pill badge-secondary" style="display: inline-block;float: right;margin: 2px">点击量 {{ post.click_num }}</span>
+                <span class="badge badge-pill badge-secondary" style="display: inline-block;float: right;margin: 2px">点赞量 {{ post.love_num }}</span>
             </div>
+            <p>{{ post.content }}</p>
         </div>
+
     {% else %}
         <div class="alert alert-dismissible alert-light">
             <button type="button" class="close" data-dismiss="alert">&times;</button>

@@ -23,8 +23,6 @@ user_bp = Blueprint('user', __name__)
 
 require_login_list = ['/usercenter', '/info', '/user/update', '/posts']
 
-fake = Faker('zh_CN')
-
 
 # if request_url in require_login_list:
 #     id = session.get('uid')
@@ -75,7 +73,7 @@ def index():
 
     page = request.args.get('page', 1, type=int)
     pagination = Article.query.order_by(-Article.create_time).paginate(page=page, per_page=5)
-    type_num = Article.query.order_by(Article.type_id).all()
+    # type_num = Article.query.order_by(Article.type_id).all()
     types = ArticleType.query.all()
     # if current_user.is_authenticated:
     # #  request cookie to judge user whether login or not
@@ -87,7 +85,7 @@ def index():
     #     # 通过cookies判断首页登入状态
     # return render_template('index.html', username=current_user.name, types=types, pagination=pagination)
     # else:
-    return render_template('index.html', types=types, pagination=pagination, type_num=type_num)
+    return render_template('index.html', types=types, pagination=pagination)
 
 
 @user_bp.route('/register', methods=['GET', 'POST'])
@@ -102,12 +100,12 @@ def user_regist():
         email = rform.email.data
         passwd = rform.password.data
         repasswd = rform.confirm.data
-        phone = rform.phone.data
+        # phone = rform.phone.data
         user = User()
         user.name = username
         user.email = email
         user.passwd = generate_password_hash(passwd)
-        user.phone = phone
+        # user.phone = phone
         db.session.add(user)
         db.session.commit()
         # return redirect(url_for(user.user_center'))
@@ -144,22 +142,6 @@ def user_regist():
     #         return redirect(url_for('user.index'))
     #     else:
     #         return '密码不一致'
-
-
-@user_bp.route('/usercenter')
-@login_required
-def user_center():
-    print("=====================中心=====================\n\n", session.get('_id'), session.get('user_id'))
-
-    # if session.get('uid'):
-    if current_user.id:
-        # seuid = session.get('uid')  # 返回为字符串
-        # user = User.query.get(int(seuid))
-
-        cu_user = User.query.get(current_user.id)
-        return render_template('user/center.html', user=cu_user)
-    else:
-        return '未登入......'
 
 
 # @user_bp.route('/login', methods=['GET', 'POST'])
@@ -227,17 +209,6 @@ def user_logout():
     return render_template('index.html', types=types, pagination=pagination)
 
 
-@user_bp.route('/posts', methods=['GET', 'POST'])
-@login_required
-def posts_create():
-    print("=====================创建=====================\n\n", session.get('_id'), session.get('user_id'))
-
-    if request.method == 'POST':
-        # uid = request.cookies.get('uid')
-        if g.user:
-            return 'yes'
-    else:
-        pass
 
 
 #  =========================================================================
@@ -258,12 +229,12 @@ def user_update():
 
     if request.method == 'POST':
         username = request.form.get('username')
-        phone = request.form.get('phone')
+        # phone = request.form.get('phone')
         uid = request.form.get('id')
         email = request.form.get('email')
         ch_user = User.query.get(uid)
         ch_user.name = username
-        ch_user.phone = phone
+        # ch_user.phone = phone
         ch_user.email = email
         db.session.commit()
         return redirect(url_for('user.user_info'))
@@ -292,97 +263,102 @@ def user_info():
 
 
 #  =========================================================================
-@user_bp.route('/nav')
-def nav():
-    return render_template('navbar.html')
 
 
 @user_bp.route('/add')
 def add():
     print("=====================添加=====================\n\n", session.get('_id'), session.get('user_id'))
 
-    # ========================================
+    lang = ['en_US', 'zh_CN']
     db.drop_all()
     print("清楚成功!!!!!!!")
     db.create_all()
     print("创建成功!!!!!!!")
-    admin = User(name='admin', email=fake.email(), passwd=generate_password_hash('chiasang'), phone='13255556666')
-    db.session.add(admin)
-    db.session.commit()
-    count = 20
-    category = ArticleType(type_name='Default')
-    db.session.add(category)
-    for i in range(count):
-        category = ArticleType(type_name=fake.word())
+    for vir in range(0, 2):
+        # fake = Faker(lang[random.randint(0, 1)])
+        # ========================================
+        # admin = User(name='admin', email=fake.email(), passwd=generate_password_hash('chiasang'))
+        # db.session.add(admin)
+        # db.session.commit()
+        count = 20
+        category = ArticleType(type_name='Default')
         db.session.add(category)
-        try:
-            db.session.commit()
-        except IntegrityError:
-            db.session.rollback()
-    # ====
-    for i in range(count):
-        post = Article(
-            title=fake.sentence(),
-            content=fake.text(2000),
-            type_id=ArticleType.query.get(random.randint(1, ArticleType.query.count())).id,
-            love_num=random.randint(1, ArticleType.query.count()),
-            click_num=random.randint(1, 100),
-            create_time=fake.date_time_this_year()
-        )
+        for i in range(5):
+            fake = Faker(lang[random.randint(0, 1)])
+            category = ArticleType(type_name=fake.word())
+            db.session.add(category)
+            try:
+                db.session.commit()
+            except IntegrityError:
+                db.session.rollback()
+        # ====
+        for i in range(count):
+            fake = Faker(lang[random.randint(0, 1)])
+            post = Article(
+                title=fake.sentence(),
+                content=fake.text(2000),
+                type_id=ArticleType.query.get(random.randint(1, ArticleType.query.count())).id,
+                love_num=random.randint(1, ArticleType.query.count()),
+                click_num=random.randint(1, 100),
+                create_time=fake.date_time_this_year()
+            )
 
-        db.session.add(post)
-    db.session.commit()
-    # ====
-    for i in range(count):
-        comment = Comment(
-            author=fake.name(),
-            email=fake.email(),
-            comment=fake.sentence(),
-            create_time=fake.date_time_this_year(),
-            reviewed=True,
-            article_id=Article.query.get(random.randint(1, Article.query.count())).id
-        )
-        db.session.add(comment)
+            db.session.add(post)
+        db.session.commit()
+        # ====
+        for i in range(count):
+            fake = Faker(lang[random.randint(0, 1)])
+            comment = Comment(
+                author=fake.name(),
+                email=fake.email(),
+                comment=fake.sentence(),
+                create_time=fake.date_time_this_year(),
+                reviewed=True,
+                article_id=Article.query.get(random.randint(1, Article.query.count())).id
+            )
+            db.session.add(comment)
 
-    salt = int(count * 0.1)
-    for i in range(salt):
-        # unreviewed comments
-        comment = Comment(
-            author=fake.name(),
-            email=fake.email(),
-            comment=fake.sentence(),
-            create_time=fake.date_time_this_year(),
-            love_num=random.randint(1, ArticleType.query.count()),
-            reviewed=False,
-            article_id=Article.query.get(random.randint(1, Article.query.count())).id
-        )
-        db.session.add(comment)
+        salt = int(count * 0.1)
+        for i in range(salt):
+            # unreviewed comments
+            fake = Faker(lang[random.randint(0, 1)])
+            comment = Comment(
+                author=fake.name(),
+                email=fake.email(),
+                comment=fake.sentence(),
+                create_time=fake.date_time_this_year(),
+                love_num=random.randint(1, ArticleType.query.count()),
+                reviewed=False,
+                article_id=Article.query.get(random.randint(1, Article.query.count())).id
+            )
+            db.session.add(comment)
 
-        # from admin
-        comment = Comment(
-            author='Mima Kirigoe',
-            email='mima@example.com',
-            comment=fake.sentence(),
-            create_time=fake.date_time_this_year(),
-            from_admin=True,
-            reviewed=True,
-            article_id=Article.query.get(random.randint(1, Article.query.count())).id
-        )
-        db.session.add(comment)
-    db.session.commit()
+            # from admin
+            comment = Comment(
+                author='Mima Kirigoe',
+                email='mima@example.com',
+                comment=fake.sentence(),
+                create_time=fake.date_time_this_year(),
+                from_admin=True,
+                reviewed=True,
+                article_id=Article.query.get(random.randint(1, Article.query.count())).id
+            )
+            db.session.add(comment)
+        db.session.commit()
 
-    # replies
-    for i in range(salt):
-        comment = Comment(
-            author=fake.name(),
-            email=fake.email(),
-            comment=fake.sentence(),
-            create_time=fake.date_time_this_year(),
-            reviewed=True,
-            replied_id=Comment.query.get(random.randint(1, Comment.query.count())).id,
-            article_id=Article.query.get(random.randint(1, Article.query.count())).id
-        )
-        db.session.add(comment)
-    db.session.commit()
-    flash('信息添加成功', 'info')
+        # replies
+        for i in range(salt):
+            fake = Faker(lang[random.randint(0, 1)])
+            comment = Comment(
+                author=fake.name(),
+                email=fake.email(),
+                comment=fake.sentence(),
+                create_time=fake.date_time_this_year(),
+                reviewed=True,
+                replied_id=Comment.query.get(random.randint(1, Comment.query.count())).id,
+                article_id=Article.query.get(random.randint(1, Article.query.count())).id
+            )
+            db.session.add(comment)
+        db.session.commit()
+        flash('信息添加成功', 'info')
     return redirect(url_for('user.index'))

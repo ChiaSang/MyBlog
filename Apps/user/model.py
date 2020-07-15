@@ -15,7 +15,7 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(32), nullable=False)
     passwd = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(64))
-    phone = db.Column(db.String(16), unique=True, nullable=False)
+    # phone = db.Column(db.String(16), unique=True, nullable=False)
     photo = db.Column(db.String(128))
     rtime = db.Column(db.DateTime, default=datetime.now)
 
