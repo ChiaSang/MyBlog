@@ -22,7 +22,7 @@ a:hover {
 
 #card-sub-info {
     overflow: auto;
-    padding-bottom: 1rem;
+    margin-bottom: 0.75rem;
 }
 
 #card-badge-pill {
