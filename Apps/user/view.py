@@ -10,7 +10,7 @@ from sqlalchemy.exc import IntegrityError
 from werkzeug.security import check_password_hash, generate_password_hash
 
 # from Apps import user
-from Apps.user.form import RegisterForm, LoginForm
+from Apps.user.form import RegisterForm, LoginForm, EditProfileForm
 from Apps.user.model import User
 
 from sqlalchemy import or_
@@ -56,8 +56,8 @@ def before_request():
         #         g.user = user
         #         print("@@@@@@@@@@", g.user)
         else:
-            form = LoginForm()
-            return render_template('user/login.html', form=form)
+            # form = LoginForm()
+            return redirect(url_for('user.user_login'))
 
 
 # 自己定义未登录的处理引擎
@@ -72,7 +72,7 @@ def index():
     print("=====================主页=====================\n\n", session.get('_id'), session.get('user_id'))
 
     page = request.args.get('page', 1, type=int)
-    pagination = Article.query.order_by(-Article.create_time).paginate(page=page, per_page=5)
+    pagination = Article.query.order_by(-Article.create_time).paginate(page=page, per_page=10)
     # type_num = Article.query.order_by(Article.type_id).all()
     types = ArticleType.query.all()
     # if current_user.is_authenticated:
@@ -89,107 +89,43 @@ def index():
 
 
 @user_bp.route('/register', methods=['GET', 'POST'])
-def user_regist():
-    print("=====================注册=====================\n\n", session.get('_id'), session.get('user_id'))
-
+def user_register():
     if current_user.is_authenticated:
         return redirect(url_for('user.index'))
-    rform = RegisterForm()
-    if rform.validate_on_submit():
-        username = rform.username.data
-        email = rform.email.data
-        passwd = rform.password.data
-        repasswd = rform.confirm.data
-        # phone = rform.phone.data
-        user = User()
-        user.name = username
-        user.email = email
-        user.passwd = generate_password_hash(passwd)
-        # user.phone = phone
+    form = RegisterForm()
+    if form.validate_on_submit():
+        username = form.username.data
+        email = form.email.data
+        passwd = form.password.data
+        user = User(email=email.lower(),
+                    name=username,
+                    passwd=generate_password_hash(passwd))
         db.session.add(user)
         db.session.commit()
-        # return redirect(url_for(user.user_center'))
-        return redirect(url_for('user.index'))
+        flash('You have register successed.')
+        return redirect(url_for('user.user_login'))
     else:
-        return render_template('user/register.html', form=rform)
-        # return '密码不一致'
-    # return render_template('user/register.html', form=rform)
-    # if request.method == 'GET':
-    #     rform = RegisterForm()
-    #     if rform.validate_on_submit():
-    #         return render_template('user/register.html', form=rform)
-    #     else:
-    #         return render_template('user/register.html', form=rform)
-    # else:
-    #     # return render_template('user/register.html')
-    #     username = request.form.get('username')
-    #     email = request.form.get('email')
-    #     passwd = request.form.get('password')
-    #     repasswd = request.form.get('confirm')
-    #     phone = request.form.get('phone')
-    #     if User.query.filter_by(phone=phone) == phone:
-    #         flash('手机号已经被注册')
-    #         return redirect(url_for('user.user_regist'))
-    #     elif passwd == repasswd:
-    #         user = User()
-    #         user.name = username
-    #         user.email = email
-    #         user.passwd = generate_password_hash(passwd)
-    #         user.phone = phone
-    #         db.session.add(user)
-    #         db.session.commit()
-    #         # return redirect(url_for(user.user_center'))
-    #         return redirect(url_for('user.index'))
-    #     else:
-    #         return '密码不一致'
-
-
-# @user_bp.route('/login', methods=['GET', 'POST'])
-# def user_login():
-#     if request.method == 'POST':
-#         username = request.form.get('user')
-#         passwd = request.form.get('passwd')
-#         users = User.query.filter_by(name=username)
-#         for user in users:
-#             if user.name == username:
-#                 if check_password_hash(user.passwd, passwd):
-#                     session['uid'] = user.id
-#                     response = redirect(url_for('user.user_center'))
-#                     #  set cookie to send user login status
-#                     response.set_cookie('uid', str(user.id))
-#                     return response
-#                 else:
-#                     return render_template('user/login.html', msg='信息有误!')
-#         # else:
-#         #     return 'User does not exist !'
-#     return render_template('user/login.html')
+        return render_template('user/register.html', form=form)
 
 
 @user_bp.route('/login', methods=['GET', 'POST'])
 def user_login():
-    print("=====================登入=====================\n\n", session.get('_id'), session.get('user_id'))
-
     if current_user.is_authenticated:
-        # Here we use a class of some kind to represent and validate our
-        # client-side form data. For example, WTForms is a library that will
-        # handle this for us, and we use a custom LoginForm to validate.
         return redirect(url_for('user.index'))
     form = LoginForm()
     if form.validate_on_submit():
         username = form.username.data
         password = form.password.data
         remember = form.remember.data
-        louser = User.query.filter_by(name=username).first()
-        if louser and check_password_hash(louser.passwd, password):
-            login_user(louser, remember=remember)
-            flash('Logged in successfully.')
-            # flash(Markup('<div class="alert alert-dismissible alert-light">Logged in successfully.</div>'))
-            # next = flask.request.args.get('next')
-            # if next:
-            #     return redirect(url_for(next))
-            # return redirect(url_for('user.index'))
-            return redirect(url_for('user.index'))
-        # flash('errors')
+        user = User.query.filter_by(name=username).first()
+        if user is not None and check_password_hash(user.passwd, password):
+            login_user(user, remember=remember)
+            flash('Logged in successfully.', 'primary')
+            next = request.args.get('next')
+            if next is None or not next.startswith('/'):
+                next = url_for('user.index')
+            return redirect(next)
+        flash('Invalid username or password.', 'warning')
     return render_template('user/login.html', form=form)
 
 
@@ -197,18 +133,9 @@ def user_login():
 @login_required
 @login.needs_refresh_handler
 def user_logout():
-    print("=====================退出=====================\n\n", session.get('_id'), session.get('user_id'))
-
-    # del session['uid']
-    # response = redirect(url_for('user.index'))
-    # response.delete_cookie('uid')
-    # return response
     logout_user()
-    pagination = Article.query.order_by(-Article.create_time).paginate(page=1, per_page=5)
-    types = ArticleType.query.all()
-    return render_template('index.html', types=types, pagination=pagination)
-
-
+    flash('You have been logged out.', 'primary')
+    return redirect(url_for('user.index'))
 
 
 #  =========================================================================
@@ -242,24 +169,42 @@ def user_update():
         return render_template('user/update.html', user=g.user)
 
 
-@user_bp.route('/search', methods=['GET', 'POST'])
-def user_search():
-    if request.method == 'POST':
-        srkey = request.form.get('search')
-        search_list = User.query.filter(or_(User.name.contains(srkey), User.phone.contains(srkey)))
-        return render_template(url_for('user.user_info'), search_list=search_list)
-    else:
-        return 'search failed'
-
-
 #  =========================================================================
 @user_bp.route('/info', methods=['GET', 'POST'])
 @login_required
 def user_info():
-    print("=====================信息=====================\n\n", session.get('_id'), session.get('user_id'))
+    # return render_template('user/info.html', form=g.user)
+    form = EditProfileForm()
+    if form.validate_on_submit():
+        user = User()
+        user.name = form.username.data
+        user.email = form.email.data
+        user.blog_name = form.blog_name.data
+        user.blog_sub_name = form.blog_sub_name.data
+        if User.query.filter_by(name=form.username.data).first():
+            pass
+        elif User.query.filter_by(email=form.email.data).first():
+            pass
+        elif User.query.filter_by(blog_name=form.blog_name.data).first():
+            pass
+        elif User.query.filter_by(blog_sub_name=form.blog_sub_name.data).first():
+            pass
+        else:
+            # db.session.add(user)
+            db.session.commit()
+            flash('Your profile has been updated.')
+            return redirect(url_for('user.user_login', username=current_user.username))
+    form.username.data = current_user.name
+    form.email.data = current_user.email
+    form.blog_name.data = current_user.blog_name
+    form.blog_sub_name.data = current_user.blog_sub_name
+    return render_template('user/info.html', form=form)
 
-    if current_user.id:
-        return render_template('user/info.html', user=g.user)
+
+# @user_bp.route('/user/<username>')
+# def user(username):
+#     check_user = User.query.filter_by(name=username).first_or_404()
+#     return render_template('user/info.html', user=check_user)
 
 
 #  =========================================================================
@@ -274,6 +219,14 @@ def add():
     print("清楚成功!!!!!!!")
     db.create_all()
     print("创建成功!!!!!!!")
+    for i in range(5):
+        fake = Faker(lang[random.randint(0, 1)])
+        category = ArticleType(type_name=fake.word())
+        db.session.add(category)
+        try:
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
     for vir in range(0, 2):
         # fake = Faker(lang[random.randint(0, 1)])
         # ========================================
@@ -281,16 +234,8 @@ def add():
         # db.session.add(admin)
         # db.session.commit()
         count = 20
-        category = ArticleType(type_name='Default')
-        db.session.add(category)
-        for i in range(5):
-            fake = Faker(lang[random.randint(0, 1)])
-            category = ArticleType(type_name=fake.word())
-            db.session.add(category)
-            try:
-                db.session.commit()
-            except IntegrityError:
-                db.session.rollback()
+        # category = ArticleType(type_name='Default')
+        # db.session.add(category)
         # ====
         for i in range(count):
             fake = Faker(lang[random.randint(0, 1)])

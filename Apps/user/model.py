@@ -15,25 +15,9 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(32), nullable=False)
     passwd = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(64))
-    # phone = db.Column(db.String(16), unique=True, nullable=False)
+    blog_name = db.Column(db.String(64))
+    blog_sub_name = db.Column(db.String(256))
     photo = db.Column(db.String(128))
     rtime = db.Column(db.DateTime, default=datetime.now)
 
     # articles = db.relationship('Article', backref='user')  # L2
-
-    @property
-    def password(self):
-        raise AttributeError('password is not a readable attribute')
-
-    def get_id(self):
-        return self.id
-
-    def is_active(self):  # line 37
-        return True
-
-    def is_anonymous(self):
-        return False
-
-    # Required for administrative interface
-    def __unicode__(self):
-        return self.username

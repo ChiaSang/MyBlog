@@ -2,10 +2,9 @@ nav {
     margin-bottom: 30px;
 }
 
-
-.border-soil {
-    border-color: #f8f5f1;
-}
+/*.border-soil {*/
+/*    border-color: #f8f5f1;*/
+/*}*/
 
 a {
     color: #718bb1;
@@ -34,17 +33,6 @@ a:hover {
     float: right;
 }
 
-
-/*a:hover {*/
-/*    color: #867676 !important;*/
-/*    text-decoration: underline*/
-/*}*/
-
-
-/*.card-body:hover {*/
-/*    color: #867676;*/
-/*}*/
-/*.card-link:hover {*/
-/*    color: #867676;*/
-/*}*/
-
+#login-form {
+    margin-top: 50px;
+}
