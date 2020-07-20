@@ -19,10 +19,10 @@ a:hover {
     color: #3a3d46;
 }
 
-#card-sub-info {
-    overflow: auto;
-    margin-bottom: 0.75rem;
-}
+/*#card-sub-info {*/
+/*    overflow: auto;*/
+/*    margin-bottom: 0.75rem;*/
+/*}*/
 
 #card-badge-pill {
     background-color: #595959;
