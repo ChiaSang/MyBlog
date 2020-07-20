@@ -2,10 +2,6 @@ nav {
     margin-bottom: 30px;
 }
 
-/*.border-soil {*/
-/*    border-color: #f8f5f1;*/
-/*}*/
-
 a {
     color: #718bb1;
 }
@@ -19,10 +15,15 @@ a:hover {
     color: #3a3d46;
 }
 
-/*#card-sub-info {*/
-/*    overflow: auto;*/
-/*    margin-bottom: 0.75rem;*/
-/*}*/
+#card-post {
+    padding-bottom: 0rem !important;
+    color: #3a3d46;
+}
+
+#card-sub-info {
+    overflow: auto;
+    margin-bottom: 0.75rem;
+}
 
 #card-badge-pill {
     background-color: #595959;
@@ -36,3 +37,7 @@ a:hover {
 #login-form {
     margin-top: 50px;
 }
+
+/*.toast{*/
+/*    max-width: 0px !important;*/
+/*}*/
