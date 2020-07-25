@@ -18,7 +18,7 @@
             {% if title %}
                 <title>{{ title }}</title>
             {% else %}
-                <title>ChiaSang Flask Web</title>
+                <title>ChiaSang BLOG</title>
             {% endif %}
         {% endblock %}
 
@@ -36,23 +36,10 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarColor01">
                         <ul class="navbar-nav mr-auto">
-                            {#                            <a class="nav-item nav-link" href="{{ url_for('user.index') }}">Home</a>#}
-                            {#                            <a class="nav-item nav-link " href="#">Category</a>#}
-                            {#                            <a class="nav-item nav-link " href="#">Achieve</a>#}
-                            {#                            <a class="nav-item nav-link " href="#">About</a>#}
                             {{ render_nav_item('user.index', 'Home', use_li=True) }}
-                            {{ render_nav_item('user.user_update', 'Category', use_li=True) }}
-                            {{ render_nav_item('user.add', 'Achieve', use_li=True) }}
-                            {#                            {{ render_nav_item('article.new_post', 'About') }}#}
-                            {#                            {% if user %}#}
+                            {{ render_nav_item('article.achieves', 'Achieves', use_li=True) }}
                             {% if current_user.is_authenticated %}
-                                {{ render_nav_item('user.user_info', 'Info', use_li=True) }}
                                 {{ render_nav_item('article.new_post', 'New', use_li=True) }}
-
-                                {#                                <a class="nav-item nav-link {% if request.endpoint == '/info' %} active {% endif %}"#}
-                                {#                                   href="{{ url_for('user.user_info') }}">Info</a>#}
-                                {#                                <a class="nav-item nav-link {% if request.endpoint == '/article/new_post' %} active {% endif %}"#}
-                                {#                                   href="{{ url_for('article.new_post') }}">New</a>#}
                             {% else %}
                             {% endif %}
 
@@ -62,7 +49,7 @@
                         <ul class="navbar-nav d-none d-lg-flex ml-2 order-3">
                             {% if current_user.is_authenticated %}
                                 <li class="nav-item navbar-right"><a class="nav-link"
-                                                                     href="{{ url_for('user.user_info') }}">
+                                                                     href="{{ url_for('user.user_info', username=current_user.name) }}">
                                     Hello {{ current_user.name }}</a>
                                 </li>
                                 <li class="nav-item navbar-right"><a class="nav-link"
@@ -86,24 +73,6 @@
             </nav>
 
 
-
-            {#            <nav class="navbar navbar-expand-lg navbar-dark bg-primary">#}
-            {#                <div class="navbar-nav mr-auto">#}
-            {#                    {{ render_nav_item('user.index', 'Home') }}#}
-            {#                    {{ render_nav_item('user.user_info', 'user_info') }}#}
-            {#                    {{ render_nav_item('article.new_post', 'About') }}#}
-            {#                </div>#}
-            {#            </nav>#}
-            {#            {% from 'bootstrap/nav.html' import render_breadcrumb_item %}#}
-            {#            <nav aria-label="breadcrumb">#}
-            {#                <ol class="breadcrumb">#}
-            {#                    {{ render_breadcrumb_item('user.index', 'Home') }}#}
-            {#                    {{ render_breadcrumb_item('user.index', 'Users') }}#}
-            {#                    {{ render_breadcrumb_item('user.index', 'Posts') }}#}
-            {#                    {{ render_breadcrumb_item('user.index', 'Comments') }}#}
-            {#                </ol>#}
-            {#            </nav>#}
-
         {% endblock %}
 
     {% endblock %}
@@ -125,7 +94,6 @@
         <footer class="bd-footer text-muted">
             <div class="container-fluid p-3 p-md-5">
                 <p class="float-lg-right"><a href="#top">Back to top</a></p>
-                {#                <button type="button" class="btn btn-primary disabled"><a href="#top">Back to top</a></button>#}
                 <p>Designed by the <a href="/docs/4.5/about/team/">Bootstrap
                 </a> styles from <a href="https://bootswatch.com">
                     bootswatch</a>.Currently v4.5.0. Code licensed <a

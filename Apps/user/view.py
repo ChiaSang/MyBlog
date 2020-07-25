@@ -170,42 +170,25 @@ def user_update():
 
 
 #  =========================================================================
-@user_bp.route('/info', methods=['GET', 'POST'])
+@user_bp.route('/edit/<username>', methods=['GET', 'POST'])
 @login_required
-def user_info():
+def user_info(username):
     # return render_template('user/info.html', form=g.user)
     form = EditProfileForm()
     if form.validate_on_submit():
-        user = User()
-        user.name = form.username.data
-        user.email = form.email.data
-        user.blog_name = form.blog_name.data
-        user.blog_sub_name = form.blog_sub_name.data
-        if User.query.filter_by(name=form.username.data).first():
-            pass
-        elif User.query.filter_by(email=form.email.data).first():
-            pass
-        elif User.query.filter_by(blog_name=form.blog_name.data).first():
-            pass
-        elif User.query.filter_by(blog_sub_name=form.blog_sub_name.data).first():
-            pass
-        else:
-            # db.session.add(user)
-            db.session.commit()
-            flash('Your profile has been updated.')
-            return redirect(url_for('user.user_login', username=current_user.username))
+        # user = User()
+        current_user.name = form.username.data
+        current_user.email = form.email.data
+        current_user.blog_name = form.blog_name.data
+        current_user.blog_sub_name = form.blog_sub_name.data
+        db.session.commit()
+        flash('Your profile has been updated.', 'primary')
+        return redirect(url_for('user.user_login', username=current_user.name))
     form.username.data = current_user.name
     form.email.data = current_user.email
     form.blog_name.data = current_user.blog_name
     form.blog_sub_name.data = current_user.blog_sub_name
     return render_template('user/info.html', form=form)
-
-
-# @user_bp.route('/user/<username>')
-# def user(username):
-#     check_user = User.query.filter_by(name=username).first_or_404()
-#     return render_template('user/info.html', user=check_user)
-
 
 #  =========================================================================
 
