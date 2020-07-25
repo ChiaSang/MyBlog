@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+
+    <div class="blog-header">
+        <h1 class="blog-title">Bootstrap Blog</h1>
+
+        <p class="lead blog-description">A Twitter Bootstrap blog theme for Hexo</p>
+
+    </div>
+    <div class="row">
+        <div class="col-sm-8 blog-main">
+            <section class="archives-wrap">
+                <div class="archive-year-wrap">
+                    <a href="/hexo-theme-bootstrap-blog/archives/2016" class="archive-year">2016</a>
+                </div>
+                <div class="archives">
+                    {% if posts %}
+                        {% for post in posts %}
+                            <article class="archive-article archive-type-post">
+                                <header class="archive-article-header">
+                                    <h1 itemprop="name">
+                                        <a>{{ post.title }}</a>
+                                    </h1>
+                                    <div class="article-datetime">
+                                        <a>
+                                            <time datetime="{{ post.timestamp }}"
+                                                  itemprop="datePublished">
+                                            </time>
+                                        </a>
+                                    </div>
+                                </header>
+                            </article>
+                        {% endfor %}
+                    {% endif %}
+
+
+                </div>
+            </section>
+
+
+        </div>
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+            <div class="sidebar-module sidebar-module-inset">
+                <h4>About</h4>
+                <p>This is a demonstration site for the <a href="https://github.com/cgmartin/hexo-theme-bootstrap-blog">Bootstrap
+                    Blog Hexo Theme</a>. If you enjoy it, send me a tweet <a href="https://twitter.com/c_g_martin"
+                                                                             target="_blank"
+                                                                             rel="external">@c_g_martin</a>.</p>
+
+            </div>
+
+            <div class="sidebar-module">
+                <h4>Categories</h4>
+                <ul class="sidebar-module-list">
+                    <li class="sidebar-module-list-item"><a class="sidebar-module-list-link"
+                                                            href="/hexo-theme-bootstrap-blog/categories/foo/">Foo</a><span
+                            class="sidebar-module-list-count">1</span>
+                        <ul class="sidebar-module-list-child">
+                            <li class="sidebar-module-list-item"><a class="sidebar-module-list-link"
+                                                                    href="/hexo-theme-bootstrap-blog/categories/foo/bar/">Bar</a><span
+                                    class="sidebar-module-list-count">1</span>
+                                <ul class="sidebar-module-list-child">
+                                    <li class="sidebar-module-list-item"><a class="sidebar-module-list-link"
+                                                                            href="/hexo-theme-bootstrap-blog/categories/foo/bar/baz/">Baz</a><span
+                                            class="sidebar-module-list-count">1</span></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-module-list-item"><a class="sidebar-module-list-link"
+                                                            href="/hexo-theme-bootstrap-blog/categories/photos/">Photos</a><span
+                            class="sidebar-module-list-count">1</span></li>
+                    <li class="sidebar-module-list-item"><a class="sidebar-module-list-link"
+                                                            href="/hexo-theme-bootstrap-blog/categories/tutorials/">Tutorials</a><span
+                            class="sidebar-module-list-count">2</span></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-module">
+                <h4>Tags</h4>
+                <ul class="sidebar-module-list">
+                    <li class="sidebar-module-list-item"><a class="sidebar-module-list-link"
+                                                            href="/hexo-theme-bootstrap-blog/tags/awesome/">Awesome</a><span
+                            class="sidebar-module-list-count">1</span></li>
+                    <li class="sidebar-module-list-item"><a class="sidebar-module-list-link"
+                                                            href="/hexo-theme-bootstrap-blog/tags/hexo/">Hexo</a><span
+                            class="sidebar-module-list-count">3</span></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-module">
+                <h4>Tag Cloud</h4>
+                <p class="tagcloud">
+                    <a href="/hexo-theme-bootstrap-blog/tags/awesome/" style="font-size: 10px">Awesome</a> <a
+                        href="/hexo-theme-bootstrap-blog/tags/bar/" style="font-size: 10px">Bar</a> <a
+                        href="/hexo-theme-bootstrap-blog/tags/baz/" style="font-size: 10px">Baz</a> <a
+                        href="/hexo-theme-bootstrap-blog/tags/foo/" style="font-size: 10px">Foo</a> <a
+                        href="/hexo-theme-bootstrap-blog/tags/hexo/" style="font-size: 20px">Hexo</a> <a
+                        href="/hexo-theme-bootstrap-blog/tags/theme/" style="font-size: 15px">Theme</a>
+                </p>
+            </div>
+
+            <div class="sidebar-module">
+                <h4>Archives</h4>
+                <ul class="sidebar-module-list">
+                    <li class="sidebar-module-list-item"><a class="sidebar-module-list-link"
+                                                            href="/hexo-theme-bootstrap-blog/archives/2013/12/">December
+                        2013</a><span class="sidebar-module-list-count">11</span></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-module">
+                <h4>Recents</h4>
+                <ul class="sidebar-module-list">
+
+                    <li>
+                        <a href="/hexo-theme-bootstrap-blog/2016/01/02/hexo-theme-bootstrap-blog/">Hexo Theme: Bootstrap
+                            Blog</a>
+                    </li>
+
+                    <li>
+                        <a href="/hexo-theme-bootstrap-blog/2016/01/01/gallery/">Gallery</a>
+                    </li>
+
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+

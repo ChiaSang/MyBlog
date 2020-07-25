@@ -15,7 +15,7 @@ class Article(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(64), nullable=False)
     content = db.Column(db.Text, nullable=False)
-    create_time = db.Column(db.DateTime, default=datetime.now)
+    timestamp = db.Column(db.DateTime, default=datetime.now, index=True)
     click_num = db.Column(db.Integer, default=0)
     love_num = db.Column(db.Integer, default=0)
     # uid = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)  # L2
@@ -35,7 +35,7 @@ class Comment(db.Model):
     love_num = db.Column(db.Integer, default=0)
     from_admin = db.Column(db.Boolean, default=False)
     reviewed = db.Column(db.Boolean, default=False)
-    create_time = db.Column(db.DateTime, default=datetime.now)
+    timestamp = db.Column(db.DateTime, default=datetime.now)
 
     article_id = db.Column(db.Integer, db.ForeignKey('article.id'))  # L3
 

@@ -9,7 +9,7 @@ from Apps.user.model import User
 class PostForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired(), Length(1, 60)])
     category = SelectField('Category', coerce=int, default=1)
-    body = StringField('Body', validators=[DataRequired()])
+    body = TextAreaField('Body', validators=[DataRequired()])
     submit = SubmitField()
 
     # def __init__(self, *args, **kwargs):

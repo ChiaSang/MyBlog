@@ -1,8 +1,8 @@
 # -*- coding:utf-8 -*-
 import os
 
-from flask_migrate import Migrate, MigrateCommand
-from flask_script import Manager
+from flask_migrate import Migrate
+# from flask_script import Manager
 from Apps import create_app
 from Apps.user.model import User
 from Apps.article.model import *
@@ -10,7 +10,7 @@ from extents import db
 
 # ======================================================
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
-manager = Manager(app=app)
+# manager = Manager(app=app)
 migrate = Migrate(app=app, db=db)
 
 
