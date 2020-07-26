@@ -1,5 +1,6 @@
 from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
+from flask_pagedown import PageDown
 from flask_sqlalchemy import SQLAlchemy
 
 # python app.py ru
@@ -9,3 +10,4 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 login = LoginManager()
 bootstrap = Bootstrap()
+pagedown = PageDown()

@@ -22,7 +22,7 @@ def achieves():
     return render_template('article/archives.html', posts=posts)
 
 
-@article_bp.route('/new_post', methods=['GET', 'POST'])
+@article_bp.route('/new', methods=['GET', 'POST'])
 @login_required
 def new_post():
     form = PostForm()
@@ -31,10 +31,10 @@ def new_post():
         post.title = form.title.data
         post.type_id = form.category.data
         post.content = form.body.data
+        db.session.add(post)
         db.session.commit()
         flash('New post have posted!')
-        return redirect(url_for('user.index'))
-    form.category.data = ArticleType.query.order_by(ArticleType.id)
+        return redirect(url_for('article.show_post', pid=post.id))
     return render_template('article/new_post.html', form=form)
 
 

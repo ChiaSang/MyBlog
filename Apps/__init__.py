@@ -6,7 +6,7 @@ from Apps.article.view import article_bp
 from Apps.user.model import User
 
 from Apps.user.view import user_bp, index
-from extents import db, bootstrap, login
+from extents import db, bootstrap, login, pagedown
 from flask_login import login_manager
 
 
@@ -18,6 +18,7 @@ def create_app(config_name):
     app.register_blueprint(article_bp)  # Create a blueprint and bond the blueprint object
     bootstrap.init_app(app)
     db.init_app(app)
+    pagedown.init_app(app)
     login.init_app(app)
     login_manager.login_view = 'user.user_login'
     login.login_message_category = 'info'
