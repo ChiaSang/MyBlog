@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template, flash, redirect, url_for
+from flask import Blueprint, request, render_template, flash, redirect, url_for, app
 from flask_login import login_required, current_user
 from markupsafe import Markup
 
@@ -11,15 +11,30 @@ from extents import db
 article_bp = Blueprint('article', __name__)
 
 
-@article_bp.route('/achieves')
-def achieves():
+@article_bp.route('/archives')
+def archives():
     import datetime
     from datetime import date
 
     start = date(year=datetime.datetime.now().year, month=1, day=1)
     end = date(year=datetime.datetime.now().year, month=datetime.datetime.now().month, day=30)
     posts = Article.query.filter(Article.timestamp <= end).filter(Article.timestamp >= start)
-    return render_template('article/archives.html', posts=posts)
+    records = Article.query.filter(
+        db.cast(Article.timestamp, db.DATE) == db.cast(datetime.date.today().month, db.DATE)).all()
+
+    article_type = ArticleType.query.all()
+    return render_template('article/archives.html', posts=posts, records=records, types=article_type)
+
+
+@article_bp.route('/category/<int:category_id>', methods=['GET', 'POST'])
+def show_category(category_id):
+    category = ArticleType.query.get_or_404(category_id)
+    page = request.args.get('page', 1, type=int)
+    per_page = 5
+    pagination = Article.query.with_parent(category).order_by(Article.timestamp.desc()).paginate(page, per_page)
+    # posts = pagination.items
+    types = ArticleType.query.all()
+    return render_template('article/category.html', category=category, pagination=pagination, types=types)
 
 
 @article_bp.route('/new', methods=['GET', 'POST'])

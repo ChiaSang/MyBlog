@@ -37,7 +37,7 @@
                     <div class="collapse navbar-collapse" id="navbarColor01">
                         <ul class="navbar-nav mr-auto">
                             {{ render_nav_item('user.index', 'Home', use_li=True) }}
-                            {{ render_nav_item('article.achieves', 'Achieves', use_li=True) }}
+                            {{ render_nav_item('article.archives', 'Archives', use_li=True) }}
                             {% if current_user.is_authenticated %}
                                 {{ render_nav_item('article.new_post', 'New', use_li=True) }}
                             {% else %}

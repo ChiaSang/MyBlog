@@ -1,22 +1,19 @@
 <!-- 侧栏 -->
 
-<div class="col-md-3">
+<div class="form-group">
+    <input class="form-control form-control-lg" type="text" placeholder="Search" id="inputLarge">
+</div>
 
-    <div class="form-group">
-        <input class="form-control form-control-lg" type="text" placeholder="Search" id="inputLarge">
-    </div>
-
+{% if types %}
     <div class="list-group">
         <li class="list-group-item list-group-item-action active">Category</li>
-        {% if types %}
-            {% for type in types %}
-                <div class="list-group-item list-group-item-action">
-                    <a href="#">{{ type.type_name }}</a>
-                    <span class="badge badge-light" style="float: right">{{ type.articles|length }}</span>
-                </div>
-            {% endfor %}
+        {% for type in types %}
+            <div class="list-group-item list-group-item-action">
+                <a href="{{ url_for('article.show_category', category_id=type.id) }}">{{ type.type_name }}</a>
+                <span class="badge badge-light" style="float: right">{{ type.articles|length }}</span>
+            </div>
+        {% endfor %}
         {% else %}
-        {% endif %}
     </div>
+{% endif %}
 
-</div>

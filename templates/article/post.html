@@ -9,6 +9,7 @@
     <div class="row">
 
         <div class="col-md-9">
+            {{ render_messages() }}
             {% if post %}
                 <div class="card-body" id="card-post">
                     <h4 class="card-title text-primary">{{ post.title }}</h4>
@@ -59,8 +60,6 @@
                     {% endfor %}
                 {% endif %}
 
-
-                {{ render_messages() }}
                 {{ render_form(form) }}
 
                 {{ render_pagination(pagination, fragment='#submit') }}

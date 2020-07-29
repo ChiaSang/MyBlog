@@ -67,7 +67,6 @@ def unauthorized():
 
 
 @user_bp.route('/')
-# @login_required
 def index():
     print("=====================主页=====================\n\n", session.get('_id'), session.get('user_id'))
 

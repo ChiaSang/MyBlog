@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-    {% from 'bootstrap/utils.html' import render_messages %}
 
+    {% from 'bootstrap/utils.html' import render_messages %}
     {{ render_messages() }}
 
     {#    {% with messages = get_flashed_messages(with_categories=true) %}#}
@@ -31,67 +31,36 @@
         <div class="col-md-9">
 
             <!-- 一个Post-Card -->
+            {% include "article/posts.html" %}
 
-            {% if pagination %}
-                {% for article in pagination.items %}
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <a href="{{ url_for('article.show_post', pid=article.id) }}">
-                                <h4 class="card-title text-primary">{{ article.title }}</h4>
-                            </a>
-                            <div id="card-sub-info">
-                                <span class="badge badge-pill"
-                                      id="card-badge-pill">{{ article.article_type.type_name }}</span>
-                                <small class="text-muted form-control-sm">{{ article.timestamp }}</small>
-                                <small class="text-muted form-control-sm"
-                                       style="display: inline-block;float: right">🖱️ {{ article.click_num }}</small>
-                                <small class="text-muted form-control-sm"
-                                       style="display: inline-block;float: right">👍 {{ article.love_num }}</small>
-                            </div>
-                            <p>{{ article.content[:255] }}...</p>
-                            <a href="{{ url_for('article.show_post', pid=article.id) }}" class="card-link"
-                               id="card-link-rm"><small>Read More</small></a>
-                        </div>
-                    </div>
-
-
-                {% endfor %}
-            {% else %}
-                <h3>No Posts</h3>
-            {% endif %}
-
-            <!-- 一个Post-Card 样式调过 -->
-
-            <div class="col-md-9 offset-md-3">
-
-
-                {#                <ul class="pagination">#}
-                {#                    <li class="page-item {% if not pagination.prev %}disabled{% endif %}">#}
-                {#                        <a class="page-link"#}
-                {#                           href="{{ url_for('user.index') }}?page={{ pagination.prev_num }}">&laquo;</a>#}
-                {#                    </li>#}
-                {#                    {% for p in range(1, pagination.pages + 1) %}#}
-                {#                        <li class="page-item {% if pagination.page == p %}active{% endif %}">#}
-                {#                            <a class="page-link" href="{{ url_for('user.index') }}?page={{ p }}">{{ p }}</a>#}
-                {#                        </li>#}
-                {#                    {% endfor %}#}
-                {#                    <li class="page-item {% if not pagination.next %}disabled{% endif %}">#}
-                {#                        <a class="page-link"#}
-                {#                           href="{{ url_for('user.index') }}?page={{ pagination.next_num }}">&raquo;</a>#}
-                {#                    </li>#}
-                {#                </ul>#}
-                {#            #}
-                {% from 'bootstrap/pagination.html' import render_pagination, render_pager %}
-                {{ render_pagination(pagination) }}
-                {{ render_pager(pagination) }}
-
-            </div>
+{#            <div class="col-md-9 offset-md-3">#}
+{#                <ul class="pagination">#}
+{#                    <li class="page-item {% if not pagination.prev %}disabled{% endif %}">#}
+{#                        <a class="page-link"#}
+{#                           href="{{ url_for('user.index') }}?page={{ pagination.prev_num }}">&laquo;</a>#}
+{#                    </li>#}
+{#                    {% for p in range(1, pagination.pages + 1) %}#}
+{#                        <li class="page-item {% if pagination.page == p %}active{% endif %}">#}
+{#                            <a class="page-link" href="{{ url_for('user.index') }}?page={{ p }}">{{ p }}</a>#}
+{#                        </li>#}
+{#                    {% endfor %}#}
+{#                    <li class="page-item {% if not pagination.next %}disabled{% endif %}">#}
+{#                        <a class="page-link"#}
+{#                           href="{{ url_for('user.index') }}?page={{ pagination.next_num }}">&raquo;</a>#}
+{#                    </li>#}
+{#                </ul>#}
+{#                {% from 'bootstrap/pagination.html' import render_pagination, render_pager %}#}
+{#                {{ render_pagination(pagination) }}#}
+{#                {{ render_pager(pagination) }}#}
+{#            </div>#}
 
         </div>
 
         <!-- 侧栏 -->
-        {% include "sidebar.html" %}
-    </div>
+        <div class="col-md-3">
+            {% include "sidebar.html" %}
+        </div>
 
+    </div>
 
 {% endblock %}
