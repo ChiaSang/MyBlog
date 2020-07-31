@@ -48,7 +48,7 @@ def new_post():
         post.content = form.body.data
         db.session.add(post)
         db.session.commit()
-        flash('New post have posted!')
+        flash('New post have posted!', 'primary')
         return redirect(url_for('article.show_post', pid=post.id))
     return render_template('article/new_post.html', form=form)
 
@@ -75,7 +75,7 @@ def show_post(pid):
                               reviewed=1)
         db.session.add(comment)
         db.session.commit()
-        flash('Your comment has been published.')
+        flash('Your comment has been published.', 'primary')
         return redirect(url_for('article.show_post', pid=pid))
     page = request.args.get('page', 1, type=int)
     # if page == -1:
