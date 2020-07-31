@@ -59,19 +59,20 @@ def show_post(pid):
     form = CommentForm()
 
     if form.validate_on_submit():
-        if request.args.get('reply') == 1:
+        if request.args.get('reply'):  # 如果获取到评论回复id，则添加评论回复id
             replied_id = request.args.get('reply')
             comment = Comment(comment=form.body.data,
                               email=form.email.data,
                               author=form.author.data,
                               article_id=pid,
+                              reviewed=1,
                               replied_id=replied_id)
         else:
             comment = Comment(comment=form.body.data,
                               email=form.email.data,
                               author=form.author.data,
-                              article_id=pid)
-
+                              article_id=pid,
+                              reviewed=1)
         db.session.add(comment)
         db.session.commit()
         flash('Your comment has been published.')
