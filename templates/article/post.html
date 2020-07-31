@@ -2,12 +2,10 @@
 {% from 'bootstrap/form.html' import render_form, render_field %}
 {% from 'bootstrap/utils.html' import render_messages %}
 {% from 'bootstrap/pagination.html' import render_pager, render_pagination %}
-{% block title %}
-    <title>{{ post.title }}</title>
-{% endblock %}
+{% block title %}<title>{{ post.title }}</title>{% endblock %}
 {% block app_content %}
-    <div class="row">
 
+    <div class="row">
         <div class="col-md-9">
             {{ render_messages() }}
             {% if post %}
@@ -15,14 +13,7 @@
                     <h4 class="card-title text-primary">{{ post.title }}</h4>
                     <div id="card-sub-info">
                         <span class="badge badge-pill" id="card-badge-pill">{{ post.article_type.type_name }}</span>
-                        {#                        <small class="text-muted form-control-sm">{{ post.timestamp }}</small>#}
                         <span class="badge badge-secondary">{{ post.timestamp }}</span>
-                        <span class="badge badge-pill badge-secondary" style="display: block;float: right">
-                        {{ post.click_num }}
-                        </span>
-                        <span class="badge badge-pill badge-secondary" style="display: block;float: right">
-                            {{ post.love_num }}
-                        </span>
                     </div>
                     <p>{{ post.content }}</p>
                 </div>
@@ -38,7 +29,7 @@
                                 <a href="{{ url_for('article.reply_comment', comment_id=comment.id) }}"><small>Reply</small></a>
                             </div>
                             <div class="toast-body">
-                                {{ comment.comment }}
+
                                 {% if comment.replied %}
 
                                     <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
@@ -53,13 +44,15 @@
                                     </div>
 
                                 {% else %}
-
                                 {% endif %}
+
+                                {{ comment.comment }}
+
                             </div>
                         </div>
                     {% endfor %}
                 {% endif %}
-
+                {{ render_messages() }}
                 {{ render_form(form) }}
 
                 {{ render_pagination(pagination, fragment='#submit') }}
@@ -73,22 +66,16 @@
 
 
         </div>
-
         <div class="col-md-3">
             <div class="card text-white bg-primary mb-3">
                 <div class="card-header">Header</div>
                 <div class="card-body">
                     <h4 class="card-title">Primary card title</h4>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                        the
-                        card's content.</p>
+                    <p class="card-text">Some </p>
                 </div>
             </div>
 
         </div>
-
     </div>
-
-
 
 {% endblock %}
