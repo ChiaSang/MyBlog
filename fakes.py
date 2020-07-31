@@ -11,14 +11,15 @@ from Apps import User
 from Apps.article.model import ArticleType, Article, Comment
 from extents import db
 
-fake = Faker()
+lang = ['zh-CN', 'en_US']
 
 
 def fake_admin():
+    fake = Faker()
     admin = User(
-        name='admin',
+        name='flask',
         email=fake.email(),
-        passwd=generate_password_hash('adminadmin'),
+        passwd=generate_password_hash('flaskweb'),
         blog_name=fake.sentence(),
         blog_sub_name=fake.sentence(),
     )
@@ -31,6 +32,7 @@ def fake_admin():
 
 def fake_categories(count=10):
     for i in range(count):
+        fake = Faker(lang[i % 2])
         category = ArticleType(type_name=fake.word())
         db.session.add(category)
         try:
@@ -41,13 +43,14 @@ def fake_categories(count=10):
 
 def fake_posts(count=50):
     for i in range(count):
+        fake = Faker(lang[i % 2])
         post = Article(
-            title=fake.sentence(),
+            title=fake.sentence(nb_words=5),
             content=fake.text(2000),
             type_id=random.randint(1, ArticleType.query.count()),
             love_num=random.randint(1, ArticleType.query.count()),
             click_num=random.randint(1, 100),
-            timestamp=datetime.now()
+            timestamp=datetime.strptime(str(fake.date_time(tzinfo=None)), '%Y-%m-%d %H:%M:%S')
         )
         db.session.add(post)
     try:
@@ -58,11 +61,12 @@ def fake_posts(count=50):
 
 def fake_comments(count=500):
     for i in range(count):
+        fake = Faker(lang[i % 2])
         comment = Comment(
             author=fake.name(),
             email=fake.email(),
             comment=fake.sentence(),
-            timestamp=datetime.now(),
+            timestamp=datetime.strptime(str(fake.date_time(tzinfo=None)), '%Y-%m-%d %H:%M:%S'),
             love_num=random.randint(1, ArticleType.query.count()),
             reviewed=True,
             article_id=random.randint(1, Article.query.count())
@@ -72,11 +76,12 @@ def fake_comments(count=500):
     salt = int(count * 0.1)
     for i in range(salt):
         # unreviewed comments
+        fake = Faker(lang[i % 2])
         comment = Comment(
             author=fake.name(),
             email=fake.email(),
             comment=fake.sentence(),
-            timestamp=datetime.now(),
+            timestamp=datetime.strptime(str(fake.date_time(tzinfo=None)), '%Y-%m-%d %H:%M:%S'),
             love_num=random.randint(1, ArticleType.query.count()),
             reviewed=False,
             article_id=random.randint(1, Article.query.count())
@@ -88,7 +93,7 @@ def fake_comments(count=500):
             author='ChiaSang Victor',
             email='mima@example.com',
             comment=fake.sentence(),
-            timestamp=datetime.now(),
+            timestamp=datetime.strptime(str(fake.date_time(tzinfo=None)), '%Y-%m-%d %H:%M:%S'),
             love_num=random.randint(1, ArticleType.query.count()),
             from_admin=True,
             reviewed=True,
@@ -102,12 +107,13 @@ def fake_comments(count=500):
 
     # replies
     for i in range(salt):
+        fake = Faker(lang[i % 2])
         comment = Comment(
             author=fake.name(),
             email=fake.email(),
             comment=fake.sentence(),
             love_num=random.randint(1, ArticleType.query.count()),
-            timestamp=datetime.now(),
+            timestamp=datetime.strptime(str(fake.date_time(tzinfo=None)), '%Y-%m-%d %H:%M:%S'),
             reviewed=True,
             replied_id=random.randint(1, Comment.query.count()),
             article_id=random.randint(1, Article.query.count())
