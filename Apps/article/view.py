@@ -1,10 +1,12 @@
 from flask import Blueprint, request, render_template, flash, redirect, url_for, app
 from flask_login import login_required, current_user
 from markupsafe import Markup
+from sqlalchemy.orm import session
 
 from Apps.article.form import PostForm, CommentForm
 from Apps.user.model import User
 
+from sqlalchemy import func, distinct, extract
 from Apps.article.model import Comment, ArticleType, Article
 from extents import db
 
@@ -13,17 +15,16 @@ article_bp = Blueprint('article', __name__)
 
 @article_bp.route('/archives')
 def archives():
-    import datetime
-    from datetime import date
-
-    start = date(year=datetime.datetime.now().year, month=1, day=1)
-    end = date(year=datetime.datetime.now().year, month=datetime.datetime.now().month, day=30)
-    posts = Article.query.filter(Article.timestamp <= end).filter(Article.timestamp >= start)
-    records = Article.query.filter(
-        db.cast(Article.timestamp, db.DATE) == db.cast(datetime.date.today().month, db.DATE)).all()
-
-    article_type = ArticleType.query.all()
-    return render_template('article/archives.html', posts=posts, records=records, types=article_type)
+    post_years = []
+    types = ArticleType.query.all()
+    articles = Article.query.order_by(Article.timestamp.desc())
+    years = Article.query.order_by(Article.timestamp.desc()).filter(extract('year', Article.timestamp))
+    for year in years:
+        post_years.append(year.timestamp.strftime("%Y"))
+    print(post_years)
+    post_years = list(set(post_years))
+    post_years.sort(reverse=True)
+    return render_template('article/archives.html', articles=articles, types=types, post_years=post_years)
 
 
 @article_bp.route('/category/<int:category_id>', methods=['GET', 'POST'])
