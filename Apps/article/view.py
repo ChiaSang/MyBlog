@@ -16,15 +16,13 @@ article_bp = Blueprint('article', __name__)
 @article_bp.route('/archives')
 def archives():
     post_years = []
-    types = ArticleType.query.all()
     articles = Article.query.order_by(Article.timestamp.desc())
     years = Article.query.order_by(Article.timestamp.desc()).filter(extract('year', Article.timestamp))
     for year in years:
         post_years.append(year.timestamp.strftime("%Y"))
-    print(post_years)
     post_years = list(set(post_years))
     post_years.sort(reverse=True)
-    return render_template('article/archives.html', articles=articles, types=types, post_years=post_years)
+    return render_template('article/archives.html', articles=articles, post_years=post_years)
 
 
 @article_bp.route('/category/<int:category_id>', methods=['GET', 'POST'])
