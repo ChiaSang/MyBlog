@@ -1,6 +1,7 @@
 import click
 from flask import Flask, app
 
+from Apps.article.model import ArticleType
 from settings import config
 from Apps.article.view import article_bp
 from Apps.user.model import User
@@ -23,8 +24,17 @@ def create_app(config_name):
     login_manager.login_view = 'user.user_login'
     login.login_message_category = 'info'
     register_commands(app)
+    register_template_context(app)
     # print(app.url_map)
     return app
+
+
+def register_template_context(app):
+    @app.context_processor
+    def make_template_context():
+        admin = User.query.first()
+        categories = ArticleType.query.order_by(ArticleType.type_name).all()
+        return dict(admin=admin, categories=categories)
 
 
 def register_commands(app):
