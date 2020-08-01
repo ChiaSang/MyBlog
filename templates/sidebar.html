@@ -4,10 +4,10 @@
     <input class="form-control form-control-lg" type="text" placeholder="Search" id="inputLarge">
 </div>
 
-{% if types %}
+{% if categories %}
     <div class="list-group">
         <li class="list-group-item list-group-item-action active">Category</li>
-        {% for type in types %}
+        {% for type in categories %}
             <div class="list-group-item list-group-item-action">
                 <a href="{{ url_for('article.show_category', category_id=type.id) }}">{{ type.type_name }}</a>
                 <span class="badge badge-light" style="float: right">{{ type.articles|length }}</span>
