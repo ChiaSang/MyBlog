@@ -2,24 +2,35 @@
 
 {% block app_content %}
 
-    <div class="blog-header">
-        <h1 class="blog-title">Bootstrap Blog</h1>
-        {% for type in types %}
-            <a href="#">{{ type.article.title }}</a>
-        {% endfor %}
+    <div class="row">
+        <div class="col-md-9">
+            {% for year in post_years %}
+                <h3>{{ year }}</h3>
+                {% for article in articles %}
+                    {% if article.timestamp.strftime("%Y") == year %}
+                        <ul>
+                            <li>
+                                <span class="badge badge-pill" id="card-badge-pill">
+                                    {{ article.article_type.type_name }}
+                                </span>
+                                <a href="{{ url_for('article.show_post', pid=article.id) }}">
+                                    {{ article.title }} {{ article.timestamp.strftime("%Y-%m-%d") }}
+                                </a>
+                                <a>{{ article.type_id }}</a>
+                            </li>
+                        </ul>
+                    {% else %}
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </div>
+
+        <div class="col-md-3">
+            {% include "sidebar.html" %}
+        </div>
 
     </div>
-    <div class="row">
-        <div class="col-sm-8 blog-main">
-            <section class="archives-wrap">
-                <div class="archive-year-wrap">
-                    {% for record in records %}
-                        <h4>{{ record.title }}</h4>
-                    {% endfor %}
-                </div>
-            </section>
-        </div>
-    </div>
+
 
 {% endblock %}
 

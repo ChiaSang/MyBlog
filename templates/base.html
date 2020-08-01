@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         {% block styles %}
             {#            {{ bootstrap.load_css() }}#}
-            <link rel="stylesheet" href="../static/css/bootstrap.css" type="text/css">
+            {#            <link rel="stylesheet" href="../static/css/bootstrap.css" type="text/css">#}
             <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css">
             <link rel="stylesheet" href="../static/style.css" type="text/css">
             <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
@@ -28,8 +28,19 @@
 
             <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
                 <div class="container">
-                    <a class="navbar-brand" href="{{ url_for('user.index') }}">CHIASANG{% if admin %}
-                        {{ admin.name }}{% endif %}</a>
+
+                    <a class="navbar-brand" href="#">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bootstrap" fill="currentColor"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                  d="M12 1H4a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V4a3 3 0 0 0-3-3zM4 0a4 4 0 0 0-4 4v8a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4V4a4 4 0 0 0-4-4H4z"/>
+                            <path fill-rule="evenodd"
+                                  d="M8.537 12H5.062V3.545h3.399c1.587 0 2.543.809 2.543 2.11 0 .884-.65 1.675-1.483 1.816v.1c1.143.117 1.904.931 1.904 2.033 0 1.488-1.084 2.396-2.888 2.396zM6.375 4.658v2.467h1.558c1.16 0 1.764-.428 1.764-1.23 0-.78-.569-1.237-1.541-1.237H6.375zm1.898 6.229H6.375V8.162h1.822c1.236 0 1.887.463 1.887 1.348 0 .896-.627 1.377-1.811 1.377z"/>
+                        </svg>
+                    </a>
+
+                    {#                    <a class="navbar-brand" href="{{ url_for('user.index') }}">CHIASANG{% if admin %}#}
+                    {#                        {{ admin.name }}{% endif %}</a>#}
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
                             aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -52,19 +63,19 @@
                                                                      href="{{ url_for('user.user_info', username=current_user.name) }}">
                                     Hello {{ current_user.name }}</a>
                                 </li>
-                                <li class="nav-item navbar-right"><a class="nav-link"
-                                                                     href="{{ url_for('user.user_logout') }}">Exit</a>
-                                </li>
+                                {#                                <li class="nav-item navbar-right"><a class="nav-link"#}
+                                {#                                                                     href="{{ url_for('user.user_logout') }}">Exit</a>#}
+                                {#                                </li>#}
                                 {#                                <li class="nav-item-divider"></li>#}
                             {% else %}
 
-                                <li class="nav-item navbar-right"><a class="nav-link"
-                                                                     href="{{ url_for('user.user_login') }}">Sign in</a>
-                                </li>
-                                <li class="nav-item navbar-right"><a class="nav-link"
-                                                                     href="{{ url_for('user.user_register') }}">Sign up
-                                </a>
-                                </li>
+                                {#                                <li class="nav-item navbar-right"><a class="nav-link"#}
+                                {#                                                                     href="{{ url_for('user.user_login') }}">Sign in</a>#}
+                                {#                                </li>#}
+                                {#                                <li class="nav-item navbar-right"><a class="nav-link"#}
+                                {#                                                                     href="{{ url_for('user.user_register') }}">Sign up#}
+                                {#                                </a>#}
+                                {#                                </li>#}
 
                             {% endif %}
                         </ul>
@@ -95,12 +106,17 @@
             <div class="container-fluid p-3 p-md-5">
                 <p class="float-lg-right"><a href="#top">Back to top</a></p>
                 <p>Designed by the <a href="/docs/4.5/about/team/">Bootstrap
-                </a> styles from <a href="https://bootswatch.com">
-                    bootswatch</a>.Currently v4.5.0. Code licensed <a
-                        href="https://github.com/twbs/bootstrap/blob/main/LICENSE"
-                        target="_blank" rel="license noopener">MIT</a>, docs <a
-                        href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="license noopener">CC BY
-                    3.0</a>.</p>
+                </a>, Powed by <a href="https://901109.xyz">ChiaSang</a>, Docs<a
+                        href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="license noopener">
+                    CC BY 3.0</a>.
+                    {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('user.user_logout') }}">Exit</a>
+                    {% else %}
+                        <a href="{{ url_for('user.user_login') }}">Sign in</a>
+                        <a href="{{ url_for('user.user_register') }}">Sign up</a>
+                    {% endif %}
+                </p>
+
             </div>
         </footer>
     </div>

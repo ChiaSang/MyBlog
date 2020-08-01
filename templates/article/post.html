@@ -10,7 +10,7 @@
             {#            {{ render_messages()}}#}
             {% for message in get_flashed_messages(with_categories=True) %}
                 {% if message[0]=='primary' %}
-                    {{ render_messages()}}
+                    {{ render_messages() }}
                 {% else %}
                 {% endif %}
             {% endfor %}
@@ -18,8 +18,14 @@
                 <div class="card-body" id="card-post">
                     <h4 class="card-title text-primary">{{ post.title }}</h4>
                     <div id="card-sub-info">
-                        <span class="badge badge-pill" id="card-badge-pill">{{ post.article_type.type_name }}</span>
-                        <span class="badge badge-secondary">{{ post.timestamp }}</span>
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-tags-fill" fill="currentColor"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                  d="M3 1a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l4.586-4.586a1 1 0 0 0 0-1.414l-7-7A1 1 0 0 0 7.586 1H3zm4 3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                            <path d="M1 7.086a1 1 0 0 0 .293.707L8.75 15.25l-.043.043a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 0 7.586V3a1 1 0 0 1 1-1v5.086z"/>
+                        </svg>
+                        <small class="text-muted form-control-sm"><a href="{{ url_for('article.show_category', category_id=post.article_type.id) }}"> {{ post.article_type.type_name }} </a></small>
+                        <small class="text-muted">{{ post.timestamp }}</small>
                     </div>
                     <p>{{ post.content }}</p>
                 </div>
@@ -60,8 +66,8 @@
                 {% endif %}
                 {% for message in get_flashed_messages(with_categories=True) %}
                     {% if message[0]=='light' %}
-{#                        {{ message[1] }}#}
-                        {{ render_messages()}}
+                        {#                        {{ message[1] }}#}
+                        {{ render_messages() }}
                     {% else %}
                     {% endif %}
                 {% endfor %}

@@ -11,7 +11,7 @@ a:hover {
 }
 
 #card-title {
-    margin-bottom: 20px;
+    margin-bottom: 0rem;
     color: #3a3d46;
 }
 
@@ -21,7 +21,7 @@ a:hover {
 }
 
 #card-sub-info {
-    overflow: auto;
+    /*overflow: auto;*/
     margin-bottom: 0.75rem;
 }
 
