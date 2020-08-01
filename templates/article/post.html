@@ -24,7 +24,8 @@
                                   d="M3 1a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l4.586-4.586a1 1 0 0 0 0-1.414l-7-7A1 1 0 0 0 7.586 1H3zm4 3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
                             <path d="M1 7.086a1 1 0 0 0 .293.707L8.75 15.25l-.043.043a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 0 7.586V3a1 1 0 0 1 1-1v5.086z"/>
                         </svg>
-                        <small class="text-muted form-control-sm"><a href="{{ url_for('article.show_category', category_id=post.article_type.id) }}"> {{ post.article_type.type_name }} </a></small>
+                        <small class="text-muted form-control-sm"><a
+                                href="{{ url_for('article.show_category', category_id=post.article_type.id) }}"> {{ post.article_type.type_name }} </a></small>
                         <small class="text-muted">{{ post.timestamp }}</small>
                     </div>
                     <p>{{ post.content }}</p>
@@ -85,13 +86,7 @@
 
         </div>
         <div class="col-md-3">
-            <div class="card text-white bg-primary mb-3">
-                <div class="card-header">Header</div>
-                <div class="card-body">
-                    <h4 class="card-title">Primary card title</h4>
-                    <p class="card-text">Some </p>
-                </div>
-            </div>
+            {% include "sidebar.html" %}
 
         </div>
     </div>
