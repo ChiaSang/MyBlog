@@ -1,5 +1,8 @@
 from datetime import datetime
 
+import bleach
+from markdown import markdown
+
 from extents import db
 
 
@@ -14,7 +17,8 @@ class ArticleType(db.Model):
 class Article(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(64), nullable=False)
-    content = db.Column(db.Text, nullable=False)
+    content = db.Column(db.Text)
+    content_html = db.Column(db.Text)
     timestamp = db.Column(db.DateTime, default=datetime.now, index=True)
     click_num = db.Column(db.Integer, default=0)
     love_num = db.Column(db.Integer, default=0)
@@ -24,6 +28,26 @@ class Article(db.Model):
     # type = db.relationship('ArticleType', backref='article')
     # type = db.relationship('Article', backref='article_type')
     comments = db.relationship('Comment', backref='article', cascade='all, delete-orphan')  # 通过文章找评论 L3
+
+    @staticmethod
+    def on_changed_content(target, value, oldvalue, initiator):
+        # allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
+        #                 'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
+        #                 'h1', 'h2', 'h3', 'p', 'img']
+        # attrs = {
+        #     '*': ['class'],
+        #     'a': ['href', 'rel'],
+        #     'img': ['src', 'alt'],
+        # }
+        # target.content_html = bleach.linkify(bleach.clean(
+        #     markdown(value, output_format='html'),
+        #     tags=allowed_tags, strip=True, attrs=attrs))
+        target.content_html = markdown(value, output_format='html',
+                                       extensions=['markdown.extensions.fenced_code', 'markdown.extensions.codehilite',
+                                                   'markdown.extensions.tables'])
+
+
+db.event.listen(Article.content, 'set', Article.on_changed_content)
 
 
 class Comment(db.Model):
