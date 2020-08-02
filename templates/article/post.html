@@ -28,7 +28,7 @@
                                 href="{{ url_for('article.show_category', category_id=post.article_type.id) }}"> {{ post.article_type.type_name }} </a></small>
                         <small class="text-muted">{{ post.timestamp }}</small>
                     </div>
-                    <p>{{ post.content }}</p>
+                    <p>{{ post.content_html|safe }}</p>
                 </div>
 
                 <hr>
