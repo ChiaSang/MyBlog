@@ -73,10 +73,12 @@
                     {% endif %}
                 {% endfor %}
                 {{ render_form(form) }}
-{#                {{ render_pager(pagination) }}#}
-
-                {{ render_pagination(pagination, align='center', fragment='#submit') }}
-{#    {{ render_pager(pagination, prev=('<span aria-hidden="true">&laquo;</span> Previous')|safe, next=('Next <span aria-hidden="true">&raquo;</span>')|safe, align='center') }}#}
+                {% if comments %}
+                    {{ render_pagination(pagination, align='center', fragment='#author') }}
+                {% else %}
+                    <p>No comment</p>
+                {% endif %}
+                {#    {{ render_pager(pagination, prev=('<span aria-hidden="true">&laquo;</span> Previous')|safe, next=('Next <span aria-hidden="true">&raquo;</span>')|safe, align='center') }}#}
 
             {% else %}
                 <div class="alert alert-dismissible alert-light">

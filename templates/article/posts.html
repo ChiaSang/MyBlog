@@ -35,7 +35,7 @@
     <ul class="pagination justify-content-center">
         <li class="page-item {% if not pagination.prev %}disabled{% endif %}">
             <a class="page-link"
-               href="{{ url_for('user.index') }}?page={{ pagination.prev_num }}">Preview&laquo;</a>
+               href="{{ url_for('user.index') }}?page={{ pagination.prev_num }}">&laquo;Preview</a>
         </li>
         <li class="page-item {% if not pagination.next %}disabled{% endif %}">
             <a class="page-link"
