@@ -84,30 +84,6 @@ class ProductionConfig(Config):
         app.logger.addHandler(mail_handler)
 
 
-# class DevConfig(object):
-#     ENV = 'development'
-#     DEBUG = True
-#     HOST = '0.0.0.0'
-#     PORT = 6000
-#     DATABASE_HOST = '192.168.6.6'
-#     DATABASE_PORT = '32778'
-#     DATABASE = 'flask'
-#     USERNAME = 'root'
-#     PASSWORD = 'admin'
-#     SECRET_KEY = 'a78d2066beb0d180'
-#     RECAPTCHA_PUBLIC_KEY = 'a78d2066beb0d180'
-#
-#     DB_URI = "mysql+pymysql://{username}:{password}@{host}:{port}/{db}?charset=utf8".format(username=USERNAME,
-#                                                                                             password=PASSWORD,
-#                                                                                             host=DATABASE_HOST,
-#                                                                                             port=DATABASE_PORT,
-#                                                                                             db=DATABASE)
-#
-#     SQLALCHEMY_DATABASE_URI = DB_URI
-#     SQLALCHEMY_TRACK_MODIFICATIONS = False
-#     SQLALCHEMY_ECHO = True
-
-
 config = {
     'development': DevelopmentConfig,
     'testing': TestingConfig,
