@@ -79,8 +79,9 @@ def show_post(pid):
     page = request.args.get('page', 1, type=int)
     # if page == -1:
     #     page = (post.comments.count() - 1)
-    pagination = Comment.query.with_parent(post).filter_by(reviewed=True).order_by(Comment.timestamp.asc()).paginate(
+    pagination = Comment.query.with_parent(post).filter_by(reviewed=True).order_by(Comment.timestamp.desc()).paginate(
         page=page, per_page=5)
+    # 通过父引用获取分页，降序排列
     comments = pagination.items
     return render_template('article/post.html', post=post, form=form, comments=comments, pagination=pagination)
 
