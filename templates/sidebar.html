@@ -5,15 +5,24 @@
 </div>
 
 {% if categories %}
-    <div class="list-group">
-        <li class="list-group-item list-group-item-action active">Category</li>
-        {% for type in categories %}
-            <div class="list-group-item list-group-item-action">
-                <a href="{{ url_for('article.show_category', category_id=type.id) }}">{{ type.type_name }}</a>
-                <span class="badge badge-light" style="float: right">{{ type.articles|length }}</span>
-            </div>
-        {% endfor %}
-        {% else %}
-    </div>
+    <h4>Category</h4>
+    <ol class="list-unstyled">
+    {% for type in categories %}
+        <li>
+            <a href="{{ url_for('article.show_category', category_id=type.id) }}">
+                {{ type.type_name }} {{ type.articles|length }}
+            </a>
+
+        </li>
+
+        {#        <div class="bd-callout bd-callout-type" style="position:relative;overflow: auto">#}
+        {#            <a href="{{ url_for('article.show_category', category_id=type.id) }}">#}
+        {#                {{ type.type_name }}#}
+        {#            </a>#}
+        {#            <span class="badge badge-light" >{{ type.articles|length }}</span>#}
+        {#        </div>#}
+    {% endfor %}
+    </ol>
+{% else %}
 {% endif %}
 

@@ -3,7 +3,7 @@
         <div class="card mb-3">
             <div class="card-body">
                 <a href="{{ url_for('article.show_post', pid=article.id) }}">
-                    <h4 class="card-title text-primary">{{ article.title }}</h4>
+                    <h4 class="card-title text-dark">{{ article.title }}</h4>
                 </a>
                 <div id="card-sub-info">
                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-tags-fill" fill="currentColor"
@@ -11,21 +11,37 @@
                         <path fill-rule="evenodd"
                               d="M3 1a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l4.586-4.586a1 1 0 0 0 0-1.414l-7-7A1 1 0 0 0 7.586 1H3zm4 3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
                         <path d="M1 7.086a1 1 0 0 0 .293.707L8.75 15.25l-.043.043a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 0 7.586V3a1 1 0 0 1 1-1v5.086z"/>
-                    </svg><small class="text-muted form-control-sm"><a href="{{ url_for('article.show_category', category_id=article.article_type.id) }}"> {{ article.article_type.type_name }}</a></small>
+                    </svg>
+                    <small class="text-dark"><a
+                            href="{{ url_for('article.show_category', category_id=article.article_type.id) }}"> {{ article.article_type.type_name }}</a></small>
                     <small class="text-muted">{{ article.timestamp }}</small>
-{#                    <small class="text-muted form-control-sm"#}
-{#                           style="display: inline-block;float: right">🖱️ {{ article.click_num }}</small>#}
-{#                    <small class="text-muted form-control-sm"#}
-{#                           style="display: inline-block;float: right">👍 {{ article.love_num }}</small>#}
+                    {#                    <small class="text-muted form-control-sm"#}
+                    {#                           style="display: inline-block;float: right">🖱️ {{ article.click_num }}</small>#}
+                    {#                    <small class="text-muted form-control-sm"#}
+                    {#                           style="display: inline-block;float: right">👍 {{ article.love_num }}</small>#}
                 </div>
                 <p>{{ article.content_html|striptags|truncate }}...</p>
-                <a href="{{ url_for('article.show_post', pid=article.id) }}" class="card-link" id="card-link-rm"><small>Read More</small></a>
+
+                <a href="{{ url_for('article.show_post', pid=article.id) }}" class="card-link" id="card-link-rm">
+                    <button type="button" class="btn btn-outline-primary btn-sm">Read More</button>
+                </a>
             </div>
         </div>
     {% endfor %}
 
     {% from 'bootstrap/pagination.html' import render_pagination, render_pager %}
-    {{ render_pagination(pagination) }}
+{#    {{ render_pagination(pagination) }}#}
+
+    <ul class="pagination justify-content-center">
+        <li class="page-item {% if not pagination.prev %}disabled{% endif %}">
+            <a class="page-link"
+               href="{{ url_for('user.index') }}?page={{ pagination.prev_num }}">Preview&laquo;</a>
+        </li>
+        <li class="page-item {% if not pagination.next %}disabled{% endif %}">
+            <a class="page-link"
+               href="{{ url_for('user.index') }}?page={{ pagination.next_num }}">Next&raquo;</a>
+        </li>
+    </ul>
 
 {% else %}
     <h3>No Posts</h3>

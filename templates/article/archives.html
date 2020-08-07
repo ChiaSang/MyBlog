@@ -5,23 +5,22 @@
     <div class="row">
         <div class="col-md-9">
             {% for year in post_years %}
-                <h3>{{ year }}</h3>
-                {% for article in articles %}
-                    {% if article.timestamp.strftime("%Y") == year %}
-                        <ul>
-                            <li>
-                                <span class="badge badge-pill" id="card-badge-pill">
-                                    {{ article.article_type.type_name }}
-                                </span>
+                <h2>{{ year }}</h2>
+                <ul class="list">
+                    {% for article in articles %}
+                        {% if article.timestamp.strftime("%Y") == year %}
+                            <li class="h6">
+                                    <span class="badge">{{ article.article_type.type_name }}
+                                    {{ article.timestamp.strftime("%m-%d") }}
+                                    </span>
                                 <a href="{{ url_for('article.show_post', pid=article.id) }}">
-                                    {{ article.title }} {{ article.timestamp.strftime("%Y-%m-%d") }}
+                                    {{ article.title }}
                                 </a>
-                                <a>{{ article.type_id }}</a>
                             </li>
-                        </ul>
-                    {% else %}
-                    {% endif %}
-                {% endfor %}
+                        {% else %}
+                        {% endif %}
+                    {% endfor %}
+                </ul>
             {% endfor %}
         </div>
 

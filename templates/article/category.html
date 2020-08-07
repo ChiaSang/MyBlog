@@ -1,17 +1,22 @@
 {% extends "base.html" %}
-{#{% from 'bootstrap/pagination.html' import render_pagination, render_pager %}#}
+{% from 'bootstrap/pagination.html' import render_pagination, render_pager %}
 
 {% block title %}{{ category.name }}{% endblock %}
 
 {% block app_content %}
 
-    <div class="page-header">
-        <h1>Category: {{ category.type_name }}</h1>
-        <p class="text-muted">{{ category.articles|length }} posts</p>
-    </div>
 
     <div class="row">
 
+
+        <div class="col-md-9">
+            <div class="page-header">
+                <h3>Category: {{ category.type_name }}
+                    <p style="float: right">{{ category.articles|length }} posts</p>
+
+                </h3>
+            </div>
+        </div>
         <div class="col-md-9">
             {% include "article/posts.html" %}
         </div>

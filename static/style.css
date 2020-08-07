@@ -76,42 +76,105 @@
 .codehilite .vm { color: #000000 } /* Name.Variable.Magic */
 .codehilite .il { color: #1C01CE } /* Literal.Number.Integer.Long */
 
-nav {
-    margin-bottom: 30px;
+.navbar {margin-bottom: 30px;}
+
+/*a {*/
+/*    color: #718bb1;*/
+/*}*/
+
+/*a:hover {*/
+/*    color: #867676;*/
+/*}*/
+
+/*#card-title {*/
+/*    margin-bottom: 0rem;*/
+/*    color: #3a3d46;*/
+/*}*/
+
+/*#card-post {*/
+/*    padding-bottom: 0rem !important;*/
+/*    color: #3a3d46;*/
+/*}*/
+
+/*#card-sub-info {*/
+/*    !*overflow: auto;*!*/
+/*    margin-bottom: 0.75rem;*/
+/*}*/
+
+/*#card-badge-pill {*/
+/*    background-color: #595959;*/
+/*    color: #ffffff;*/
+/*}*/
+
+/*#card-link-rm {*/
+/*    float: right;*/
+/*}*/
+
+/*#login-form {*/
+/*    margin-top: 50px;*/
+/*}*/
+
+
+/*.list-group-item {*/
+/*  border: 0;*/
+/*  }*/
+
+body {
+    font-family: Georgia, "Times New Roman", Times, serif;
+    color: #313131;
+}
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: normal;
+    color: #313131;
+}
+a{color: #2f7bb4;}
+
+.page-link {
+     color: #3e8cc7;
 }
 
-a {
-    color: #718bb1;
+.page-item.active .page-link {
+    background-color: #3e8cc7!important;
+     border-color: #3e8cc7!important;
 }
 
-a:hover {
-    color: #867676;
+.bd-callout-type {
+    border-left-color: #8e5b62!important;
 }
 
-#card-title {
-    margin-bottom: 0rem;
-    color: #3a3d46;
+.bd-callout {
+    padding: .25rem;
+    margin-top: .25rem;
+    margin-bottom: .25rem;
+    border: 1px solid #eee;
+    border-left-width: .25rem;
+    border-radius: .25rem;
+    /*display: block;*/
 }
 
-#card-post {
-    padding-bottom: 0rem !important;
-    color: #3a3d46;
+/*.btn-primary{*/
+/*    background-color: #2f7bb4!important;*/
+/*}*/
+
+.btn-sm{
+    border-radius: 2rem!important;
+    font-size: .5rem;
 }
 
-#card-sub-info {
-    /*overflow: auto;*/
-    margin-bottom: 0.75rem;
+.btn-outline-primary {
+    color: #3e8cc7;
+    border-color: #3e8cc7;
 }
 
-#card-badge-pill {
-    background-color: #595959;
-    color: #ffffff;
+.btn-outline-primary:hover {
+    color: #fff;
+    background-color: #3e8cc7!important;
+    border-color: #3e8cc7!important;
 }
 
-#card-link-rm {
-    float: right;
+.toast{
+    width: 100% !important;
 }
 
-#login-form {
-    margin-top: 50px;
-}
+#sidebar-type {padding:0!important;}
