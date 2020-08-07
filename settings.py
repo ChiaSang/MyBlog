@@ -5,6 +5,8 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'a78d2066beb0d180'
+    RECAPTCHA_PUBLIC_KEY = os.environ.get('SECRET_KEY') or '6LfBzbsZAAAAAN7UX684Cn18Grq7PSoiWBtJ52_j'
+    RECAPTCHA_PRIVATE_KEY = os.environ.get('SECRET_KEY') or '6LfBzbsZAAAAAA0phBnPKdepwhpA4ev6CRPBo2wv'
     MAIL_SERVER = os.environ.get('MAIL_SERVER', 'smtp.googlemail.com')
     MAIL_PORT = int(os.environ.get('MAIL_PORT', '587'))
     MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS', 'true').lower() in ['true', 'on', '1']

@@ -1,6 +1,6 @@
 from flask import flash
 from flask_pagedown.fields import PageDownField
-from flask_wtf import FlaskForm
+from flask_wtf import FlaskForm, RecaptchaField
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField, TextField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 
@@ -24,4 +24,5 @@ class CommentForm(FlaskForm):
     author = StringField('Name', validators=[DataRequired(), Length(1, 30)])
     email = StringField('Email', validators=[DataRequired(), Email(), Length(1, 254)])
     body = TextAreaField('Comment', validators=[DataRequired()])
+    recaptcha = RecaptchaField()
     submit = SubmitField()
