@@ -20,8 +20,8 @@ def fake_admin():
         name='flask',
         email=fake.email(),
         passwd=generate_password_hash('flaskweb'),
-        blog_name=fake.sentence(),
-        blog_sub_name=fake.sentence(),
+        blog_name='ChiaSang\'s Blog',
+        blog_sub_name='人们常觉得准备的阶段是在浪费时间。只有真正机会来临， 而自己没有能力把握的时候， 才知道自己平时没有准备才是浪费了时间。 --罗曼·罗兰',
     )
     db.session.add(admin)
     try:
@@ -33,7 +33,7 @@ def fake_admin():
 def fake_categories(count=10):
     for i in range(count):
         fake = Faker(lang[i % 2])
-        category = ArticleType(type_name=fake.word())
+        category = ArticleType(type_name=fake.word().upper())
         db.session.add(category)
         try:
             db.session.commit()
@@ -41,7 +41,7 @@ def fake_categories(count=10):
             db.session.rollback()
 
 
-def fake_posts(count=50):
+def fake_posts(count=25):
     for i in range(count):
         fake = Faker(lang[i % 2])
         post = Article(
