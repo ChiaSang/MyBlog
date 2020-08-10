@@ -123,25 +123,23 @@ body {
     font-family: Georgia, "Times New Roman", Times, serif;
     color: #313131;
 }
+
 h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: normal;
     color: #313131;
 }
-a{color: #2f7bb4;}
 
-.page-link {
-     color: #3e8cc7;
-}
+a {color: #2f7bb4;}
+
+.page-link {color: #3e8cc7;}
 
 .page-item.active .page-link {
-    background-color: #3e8cc7!important;
-     border-color: #3e8cc7!important;
+    background-color: #3e8cc7 !important;
+    border-color: #3e8cc7 !important;
 }
 
-.bd-callout-type {
-    border-left-color: #8e5b62!important;
-}
+.bd-callout-type {border-left-color: #8e5b62 !important;}
 
 .bd-callout {
     padding: .25rem;
@@ -157,24 +155,28 @@ a{color: #2f7bb4;}
 /*    background-color: #2f7bb4!important;*/
 /*}*/
 
-.btn-sm{
-    border-radius: 2rem!important;
-    font-size: .5rem;
-}
+/*.btn-sm {*/
+/*    border-radius: 2rem !important;*/
+/*    font-size: .5rem;*/
+/*}*/
 
 .btn-outline-primary {
     color: #3e8cc7;
     border-color: #3e8cc7;
+    border-radius: 2rem !important;
+    font-size: .5rem;
 }
 
 .btn-outline-primary:hover {
     color: #fff;
-    background-color: #3e8cc7!important;
-    border-color: #3e8cc7!important;
+    background-color: #3e8cc7 !important;
+    border-color: #3e8cc7 !important;
 }
 
-.toast{
+.toast {
     width: 100% !important;
 }
 
-#sidebar-type {padding:0!important;}
+#sidebar-type {
+    padding: 0 !important;
+}

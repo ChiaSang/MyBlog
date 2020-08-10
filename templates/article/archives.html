@@ -20,7 +20,7 @@
                                 {% endif %}
                                 <span class="badge">{{ article.article_type.type_name }}
                                     {{ article.timestamp.strftime("%m-%d") }}
-                                </span>
+                                    </span>
                                 <a href="{{ url_for('article.show_post', pid=article.id) }}">
                                     {{ article.title }}
                                 </a>
@@ -30,24 +30,6 @@
                     {% endfor %}
                 </ul>
             {% endfor %}
-
-            {#            <ul>#}
-            {#                {% for date in archives %}#}
-            {#                    <a href="{{ url_for('article.archives', year=date[0], month=date[1]) }}"></a>#}
-            {##}
-            {#                    {{ date[0] }} 年 {{ date[1] }} 月#}
-            {#                    <li>#}
-            {#                        {% for article in articles %}#}
-            {#                            <a href="{{ url_for('article.show_post', pid=article.id) }}">#}
-            {#                                <p> {{ article.title }} </p>#}
-            {#                            </a>#}
-            {#                        {% endfor %}#}
-            {#                    </li>#}
-            {#                {% else %}#}
-            {#                    暂无归档！#}
-            {#                {% endfor %}#}
-            {#            </ul>#}
-
         </div>
 
         <div class="col-md-3">
