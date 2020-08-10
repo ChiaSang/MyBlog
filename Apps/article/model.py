@@ -23,7 +23,7 @@ class Article(db.Model):
     click_num = db.Column(db.Integer, default=0)
     love_num = db.Column(db.Integer, default=0)
     # uid = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)  # L2
-    type_id = db.Column(db.Integer, db.ForeignKey('article_type.id'), nullable=False)  # L1
+    type_id = db.Column(db.Integer, db.ForeignKey('article_type.id', ondelete='CASCADE'), nullable=False)  # L1
 
     # type = db.relationship('ArticleType', backref='article')
     # type = db.relationship('Article', backref='article_type')
@@ -61,9 +61,10 @@ class Comment(db.Model):
     reviewed = db.Column(db.Boolean, default=False)
     timestamp = db.Column(db.DateTime, default=datetime.now)
 
-    article_id = db.Column(db.Integer, db.ForeignKey('article.id'))  # L3
+    article_id = db.Column(db.Integer, db.ForeignKey('article.id', ondelete='CASCADE'))  # L3
+    # ondelete='CASCADE' 进行级联删除，删除文章后评论也随之删除，下面代码同上
 
-    replied_id = db.Column(db.Integer, db.ForeignKey('comment.id'))  # L4 自身引用
+    replied_id = db.Column(db.Integer, db.ForeignKey('comment.id', ondelete='CASCADE'))  # L4 自身引用
     replies = db.relationship('Comment', back_populates='replied', cascade='all, delete-orphan')  # L4 自身引用
     replied = db.relationship('Comment', back_populates='replies', remote_side=[id])  # L4 自身引用
 
