@@ -39,7 +39,6 @@ def show_category(category_id):
     page = request.args.get('page', 1, type=int)
     per_page = 5
     pagination = Article.query.with_parent(category).order_by(Article.timestamp.desc()).paginate(page, per_page)
-    # posts = pagination.items
     types = ArticleType.query.all()
     return render_template('article/category.html', category=category, pagination=pagination, types=types)
 
@@ -85,8 +84,6 @@ def show_post(pid):
         flash('Your comment has been published.', 'primary')
         return redirect(url_for('article.show_post', pid=pid))
     page = request.args.get('page', 1, type=int)
-    # if page == -1:
-    #     page = (post.comments.count() - 1)
     pagination = Comment.query.with_parent(post).filter_by(reviewed=True).order_by(Comment.timestamp.desc()).paginate(
         page=page, per_page=5)
     # 通过父引用获取分页，降序排列
