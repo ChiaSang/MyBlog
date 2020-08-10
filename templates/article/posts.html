@@ -23,7 +23,7 @@
                 <p>{{ article.content_html|striptags|truncate }}...</p>
 
                 <a href="{{ url_for('article.show_post', pid=article.id) }}" class="card-link" id="card-link-rm">
-                    <button type="button" class="btn btn-outline-primary btn-sm">Read More</button>
+                    <button type="button" class="btn btn-outline-primary">Read More</button>
                 </a>
             </div>
         </div>
