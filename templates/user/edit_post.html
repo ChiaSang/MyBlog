@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}
+    <title>Edit{{ form.title.data }}</title>
+{% endblock %}
+
+{% block app_content %}
+
+    {% from 'bootstrap/form.html' import render_form, render_field %}
+    {% from 'bootstrap/utils.html' import render_messages %}
+
+    {{ render_messages() }}
+    {{ render_form(form) }}
+{% endblock %}
