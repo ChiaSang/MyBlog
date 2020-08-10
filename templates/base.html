@@ -58,9 +58,10 @@
                         <ul class="nav navbar-nav navbar-right"></ul>
                         <ul class="navbar-nav d-none d-lg-flex ml-2 order-3">
                             {% if current_user.is_authenticated %}
-                                <li class="nav-item navbar-right"><a class="nav-link"
-                                                                     href="{{ url_for('user.user_info', username=current_user.name) }}">
-                                    Hello {{ current_user.name }}</a>
+                                <li class="nav-item navbar-right">
+                                    <a class="nav-link"
+                                       href="{{ url_for('user.user_info', username=current_user.name) }}">
+                                        Hello {{ current_user.name }}</a>
                                 </li>
                                 {#                                <li class="nav-item navbar-right"><a class="nav-link"#}
                                 {#                                                                     href="{{ url_for('user.user_logout') }}">Exit</a>#}
