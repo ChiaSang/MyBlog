@@ -7,21 +7,13 @@
 {% if categories %}
     <h4>Category</h4>
     <ol class="list-unstyled">
-    {% for type in categories %}
-        <li>
-            <a href="{{ url_for('article.show_category', category_id=type.id) }}">
-                {{ type.type_name }} {{ type.articles|length }}
-            </a>
-
-        </li>
-
-        {#        <div class="bd-callout bd-callout-type" style="position:relative;overflow: auto">#}
-        {#            <a href="{{ url_for('article.show_category', category_id=type.id) }}">#}
-        {#                {{ type.type_name }}#}
-        {#            </a>#}
-        {#            <span class="badge badge-light" >{{ type.articles|length }}</span>#}
-        {#        </div>#}
-    {% endfor %}
+        {% for type in categories %}
+            <li>
+                <a href="{{ url_for('article.show_category', category_id=type.id) }}">
+                    {{ type.type_name }} {{ type.articles|length }}
+                </a>
+            </li>
+        {% endfor %}
     </ol>
 {% else %}
 {% endif %}
