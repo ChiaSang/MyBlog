@@ -7,7 +7,6 @@
 
     <div class="row">
         <div class="col-md-9">
-            {#            {{ render_messages()}}#}
             {% for message in get_flashed_messages(with_categories=True) %}
                 {% if message[0]=='primary' %}
                     {{ render_messages() }}
@@ -37,14 +36,18 @@
                     {% for comment in comments %}
                         <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
                             <div class="toast-header">
+                                {% if current_user.is_authenticated %}
+                                    <a class="badge badge-primary"
+                                       href="{{ url_for('user.comment_delete', cid=comment.id, pid=comment.article.id) }}"
+                                       role="button">Delete</a>&nbsp;&nbsp
+                                {% endif %}
                                 <strong class="mr-auto">{{ comment.author }}</strong>
-                                <small>{{ comment.timestamp }}</small>&nbsp;&nbsp;
+                                <small>{{ comment.timestamp }}</small>&nbsp;&nbsp
                                 <a href="{{ url_for('article.reply_comment', comment_id=comment.id) }}"><small>Reply</small></a>
+
                             </div>
                             <div class="toast-body">
-
                                 {% if comment.replied %}
-
                                     <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
                                         <div class="toast-header">
                                             <strong class="mr-auto">{{ comment.replied.author }}</strong>
@@ -55,43 +58,37 @@
                                             {{ comment.replied.comment }}
                                         </div>
                                     </div>
-
                                 {% else %}
                                 {% endif %}
-
                                 {{ comment.comment }}
-
                             </div>
                         </div>
                     {% endfor %}
-                {% endif %}
-                {% for message in get_flashed_messages(with_categories=True) %}
-                    {% if message[0]=='light' %}
-                        {#                        {{ message[1] }}#}
-                        {{ render_messages() }}
-                    {% else %}
-                    {% endif %}
-                {% endfor %}
-                {{ render_form(form) }}
-                {% if comments %}
+                    {% for message in get_flashed_messages(with_categories=True) %}
+                        {% if message[0]=='light' %}
+                            {#                        {{ message[1] }}#}
+                            {{ render_messages() }}
+                        {% else %}
+                        {% endif %}
+                    {% endfor %}
+                    {{ render_form(form) }}
                     {{ render_pagination(pagination, align='center', fragment='#author') }}
                 {% else %}
                     <p>No comment</p>
+                    {{ render_form(form) }}
+                    {{ render_pagination(pagination, align='center', fragment='#author') }}
                 {% endif %}
                 {#    {{ render_pager(pagination, prev=('<span aria-hidden="true">&laquo;</span> Previous')|safe, next=('Next <span aria-hidden="true">&raquo;</span>')|safe, align='center') }}#}
-
             {% else %}
-                <div class="alert alert-dismissible alert-light">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <p>No post</p>
-                </div>
+                <p>No post</p>
+                {#                <div class="alert alert-dismissible alert-light">#}
+                {#                    <button type="button" class="close" data-dismiss="alert">&times;</button>#}
+                {#                    <p>No post</p>#}
+                {#                </div>#}
             {% endif %}
-
-
         </div>
         <div class="col-md-3">
             {% include "sidebar.html" %}
-
         </div>
     </div>
 
