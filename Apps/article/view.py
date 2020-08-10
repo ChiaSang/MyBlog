@@ -2,7 +2,7 @@ from flask import Blueprint, request, render_template, flash, redirect, url_for
 from flask_login import login_required
 from markupsafe import Markup
 from Apps.article.form import PostForm, CommentForm
-from sqlalchemy import func
+from sqlalchemy import extract
 from Apps.article.model import Comment, ArticleType, Article
 from extents import db
 
@@ -11,26 +11,15 @@ article_bp = Blueprint('article', __name__)
 
 @article_bp.route('/archives')
 def archives():
-    year = request.args.get('year', type=int)
-    month = request.args.get('month', type=int)
     post_years = []
-
     articles = Article.query.order_by(Article.timestamp.desc())
-    # years = Article.query.order_by(Article.timestamp.desc()).filter(extract('year', Article.timestamp))
-
-    # archives = db.session.query(extract('year', Article.timestamp).label('year'),
-    #                             extract('month', Article.timestamp).label('month')).distinct().all()[::-1]
-    archives = db.session.query(func.date_format(Article.timestamp, '%Y-%m').label('date'),
-                                func.count('*').label('cnt')).distinct().group_by('date').all()[::-1]
-    # years = db.session.query(func.date_format(Article.timestamp, '%Y').label('year')).distinct().group_by('year').all()[::-1]
-    # 归档获取月份
-
-    # for year in years:
-    #     post_years.append(year.timestamp.strftime("%Y"))
-    # post_years = list(set(post_years))
-    # post_years.sort(reverse=True)
-    # return render_template('article/archives.html', articles=posts, post_years=post_years)
-    return render_template('article/archives.html', articles=articles, archives=archives)
+    years = Article.query.order_by(Article.timestamp.desc()).filter(extract('year', Article.timestamp))
+    for year in years:
+        post_years.append(year.timestamp.strftime("%Y"))
+    print(post_years)
+    post_years = list(set(post_years))
+    post_years.sort(reverse=True)
+    return render_template('article/archives.html', articles=articles, post_years=post_years)
 
 
 @article_bp.route('/category/<int:category_id>', methods=['GET', 'POST'])
