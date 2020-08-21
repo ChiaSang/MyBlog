@@ -1,8 +1,11 @@
+from collections import defaultdict, Counter
+from datetime import datetime, date
+
 from flask import Blueprint, request, render_template, flash, redirect, url_for
 from flask_login import login_required
 from markupsafe import Markup
 from Apps.article.form import PostForm, CommentForm
-from sqlalchemy import extract
+from sqlalchemy import extract, func, and_, cast
 from Apps.article.model import Comment, ArticleType, Article
 from extents import db
 
@@ -20,6 +23,58 @@ def archives():
     post_years = list(set(post_years))
     post_years.sort(reverse=True)
     return render_template('article/archives.html', articles=articles, post_years=post_years)
+
+
+@article_bp.route('/archive/<int:year>/<int:month>')
+def archive_month(year, month):
+    """
+    按照日期对post进行归档展示
+    """
+    post_lower_date = date(year, month, 1)
+    post_upper_date = date(year, month, 31)  # 日期区间,天数默认为1
+    iso_lower_date = post_lower_date.isoformat()
+    iso_upper_date = post_upper_date.isoformat()  # 格式化日期为iso格式 e.g. 2020-12-22
+    articles = db.session.query(Article).filter(Article.timestamp.between(iso_lower_date, iso_upper_date))
+    return render_template('article/archive.html', articles=articles, year=year, month=month)
+
+
+@article_bp.route('/archive/<int:year>')
+def archive_year(year):
+    """
+    按照日期对post进行归档展示
+    """
+    post_lower_date = date(year, 1, 1)
+    post_upper_date = date(year+1, 1, 1)  # 日期区间,月份，天数默认为1
+    iso_lower_date = post_lower_date.isoformat()
+    iso_upper_date = post_upper_date.isoformat()  # 格式化日期为iso格式 e.g. 2020-12-22
+    articles = db.session.query(Article).filter(Article.timestamp.between(iso_lower_date, iso_upper_date))
+    return render_template('article/archive.html', articles=articles, year=year)
+
+
+@article_bp.route('/archive')
+def show_archives():
+    post = db.session.query(Article.timestamp).all()[::-1]
+    d = defaultdict(list)
+    for i in post:
+        d[i.timestamp.year].append(i.timestamp.month)
+    # add the monthly counts by counting the instances of month number.
+    date_dict = {}
+    for k, v in d.items():
+        date_dict[k] = Counter(v)
+    total_dict = {}
+    # add the monthly and yearly totals counts
+    post_total = 0
+    for key, value in date_dict.items():
+        year_sum = 0
+        for m, c in value.items():
+            year_sum += c
+            post_total += c
+            total_dict[key] = year_sum
+    # d = defaultdict(list)
+    # for k in date_dict.items():
+    #     for v in total_dict.items():
+    #         d[k].append(v)
+    return render_template('sidebar.html', date_dict=date_dict, total_dict=total_dict)
 
 
 @article_bp.route('/category/<int:category_id>', methods=['GET', 'POST'])

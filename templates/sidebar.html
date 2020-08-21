@@ -18,3 +18,18 @@
 {% else %}
 {% endif %}
 
+{% if date_zip %}
+    <h4>Archives</h4>
+    {% for key, value in date_zip %}
+        <a href="{{ url_for('article.archive_year', year=value[0]) }}">{{ value[0] }}</a>({{ value[1] }})
+        <ul>
+            {% for mon, num in key[1].items() %}
+                <li>
+                    <a href="{{ url_for('article.archive_month', year=value[0], month=mon) }}">{{ mon }}</a>({{ num }})
+                </li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+{% endif %}
+
+

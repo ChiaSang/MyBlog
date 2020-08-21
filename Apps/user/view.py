@@ -7,6 +7,9 @@ from Apps.user.model import User
 from extents import db, login
 from Apps.article.model import ArticleType, Article, Comment
 
+from collections import defaultdict, Counter
+from sqlalchemy.orm import session
+
 user_bp = Blueprint('user', __name__)
 
 
@@ -15,7 +18,25 @@ def index():
     page = request.args.get('page', 1, type=int)
     pagination = Article.query.order_by(-Article.timestamp).paginate(page=page, per_page=10)
     types = ArticleType.query.all()
-    return render_template('index.html', types=types, pagination=pagination)
+    post = db.session.query(Article.timestamp).all()[::-1]
+    d = defaultdict(list)
+    for i in post:
+        d[i.timestamp.year].append(i.timestamp.month)
+    # add the monthly counts by counting the instances of month number.
+    date_dict = {}
+    for k, v in d.items():
+        date_dict[k] = Counter(v)
+    total_dict = {}
+    # add the monthly and yearly totals counts
+    year_total = 0
+    for key, value in date_dict.items():
+        year_sum = 0
+        for m, c in value.items():
+            year_sum += c
+            year_total += c
+            total_dict[key] = year_sum
+    date_zip = zip(date_dict.items(), total_dict.items())
+    return render_template('index.html', types=types, pagination=pagination, date_zip=date_zip)
 
 
 @user_bp.route('/register', methods=['GET', 'POST'])

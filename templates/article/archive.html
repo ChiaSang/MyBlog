@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+
+    <div class="row">
+        <div class="col-md-9">
+            <div class="page-header">
+                <h3>Archive: {{ year }}.{{ month }}</h3>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <ul class="list">
+                {% for article in articles %}
+                    <li class="h6">
+                        <span class="badge">{{ article.article_type.type_name }}
+                            {{ article.timestamp.strftime("%m-%d") }}
+                        </span>
+                        <a href="{{ url_for('article.show_post', pid=article.id) }}">
+                            {{ article.title }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <!-- 侧栏 -->
+        <div class="col-md-3">
+            {% include "sidebar.html" %}
+        </div>
+    </div>
+
+{% endblock %}
