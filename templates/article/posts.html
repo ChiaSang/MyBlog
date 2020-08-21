@@ -14,7 +14,8 @@
                     </svg>
                     <small class="text-dark"><a
                             href="{{ url_for('article.show_category', category_id=article.article_type.id) }}"> {{ article.article_type.type_name }}</a></small>
-                    <small class="text-muted">{{ article.timestamp }}</small>
+{#                    <small class="text-muted">{{ article.timestamp }}</small>#}
+                    <small class="text-muted">{{ moment(article.timestamp).format('MMMM Do YYYY') }}</small>
                     {#                    <small class="text-muted form-control-sm"#}
                     {#                           style="display: inline-block;float: right">🖱️ {{ article.click_num }}</small>#}
                     {#                    <small class="text-muted form-control-sm"#}
