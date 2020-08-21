@@ -1,5 +1,6 @@
 import click
 from flask import Flask, app
+from flask_moment import Moment
 
 from Apps.article.model import ArticleType
 from settings import config
@@ -21,11 +22,12 @@ def create_app(config_name):
     db.init_app(app)
     pagedown.init_app(app)
     login.init_app(app)
+    moment = Moment(app)
     login_manager.login_view = 'user.user_login'
     login.login_message_category = 'info'
     register_commands(app)
     register_template_context(app)
-    # print(app.url_map)
+    print("\n================================\n\n", app.url_map, "\n")
     return app
 
 
