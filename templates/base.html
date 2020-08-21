@@ -9,7 +9,7 @@
         {% block styles %}
             {{ bootstrap.load_css() }}
             {#            <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css">#}
-            <link rel="stylesheet" href="../static/style.css" type="text/css">
+            <link rel="stylesheet" href="{{ url_for('static', filename="style.css") }}" type="text/css">
             <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
         {% endblock %}
 
@@ -127,6 +127,7 @@
     <!-- Optional JavaScript -->
     {{ bootstrap.load_js() }}
     {{ pagedown.include_pagedown() }}
+    {{ moment.include_moment() }}
 {% endblock %}
 </body>
 
