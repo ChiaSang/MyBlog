@@ -44,7 +44,7 @@ class Article(db.Model):
         #     tags=allowed_tags, strip=True, attrs=attrs))
         target.content_html = markdown(value, output_format='html',
                                        extensions=['markdown.extensions.fenced_code', 'markdown.extensions.codehilite',
-                                                   'markdown.extensions.tables'])
+                                                   'markdown.extensions.tables', 'markdown.extensions.sane_lists'])
 
 
 db.event.listen(Article.content, 'set', Article.on_changed_content)
