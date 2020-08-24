@@ -1,5 +1,6 @@
+import calendar
 from collections import defaultdict, Counter
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 
 from flask import Blueprint, request, render_template, flash, redirect, url_for
 from flask_login import login_required
@@ -30,10 +31,11 @@ def archive_month(year, month):
     """
     按照日期对post进行归档展示
     """
-    post_lower_date = date(year, month, 1)
-    post_upper_date = date(year, month, 31)  # 日期区间,天数默认为1
-    iso_lower_date = post_lower_date.isoformat()
-    iso_upper_date = post_upper_date.isoformat()  # 格式化日期为iso格式 e.g. 2020-12-22
+    post_date = date(year, month, 1)  # 日期区间,天数默认为1
+    days_in_month = calendar.monthrange(post_date.year, post_date.month)
+    end_date = post_date + timedelta(days=days_in_month[1])  # 获取当前月份的天数
+    iso_lower_date = post_date.isoformat()
+    iso_upper_date = end_date.isoformat()  # 格式化日期为iso格式 e.g. 2020-12-22
     articles = db.session.query(Article).filter(Article.timestamp.between(iso_lower_date, iso_upper_date))
     return render_template('article/archive.html', articles=articles, year=year, month=month)
 
@@ -43,8 +45,8 @@ def archive_year(year):
     """
     按照日期对post进行归档展示
     """
-    post_lower_date = date(year, 1, 1)
-    post_upper_date = date(year+1, 1, 1)  # 日期区间,月份，天数默认为1
+    post_lower_date = date(year, 1, 1)  # 日期区间,月份，天数默认为1
+    post_upper_date = post_lower_date + timedelta(days=365)
     iso_lower_date = post_lower_date.isoformat()
     iso_upper_date = post_upper_date.isoformat()  # 格式化日期为iso格式 e.g. 2020-12-22
     articles = db.session.query(Article).filter(Article.timestamp.between(iso_lower_date, iso_upper_date))
