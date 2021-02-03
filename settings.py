@@ -37,9 +37,12 @@ class DevelopmentConfig(Config):
     ENV = 'development'
     DATABASE_HOST = '192.168.6.6'
     DATABASE_PORT = '32778'
-    DATABASE = os.environ.get('FLASK_DATABASE')
-    USERNAME = os.environ.get('FLASK_DATABASE_USERNAME')
-    PASSWORD = os.environ.get('FLASK_DATABASE_PASSWORD')
+    # DATABASE = os.environ.get('FLASK_DATABASE')
+    # USERNAME = os.environ.get('FLASK_DATABASE_USERNAME')
+    # PASSWORD = os.environ.get('FLASK_DATABASE_PASSWORD')
+    DATABASE = 'flask'
+    USERNAME = 'root'
+    PASSWORD = 'admin'
     DB_URI = "mysql+pymysql://{username}:{password}@{host}:{port}/{db}?charset=utf8".format(username=USERNAME,
                                                                                             password=PASSWORD,
                                                                                             host=DATABASE_HOST,
